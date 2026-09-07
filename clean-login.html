@@ -1,0 +1,91 @@
+<!doctype html>
+<!--
+  SR Agent fixture — CLEAN. The counterpart to broken-login.html, same workflow shape.
+  Consumed by BstackAIAutomation api/src/features/a11y/weba11y_sr_agent_scan.feature
+  (@sr-agent-a11y-scan-clean). The point is a zero-violation report, so every check the
+  page-load audit and the traversal make must pass:
+
+    * descriptive <title>                       -> no PAGE_TITLE
+    * skip link first in tab order, to <main>   -> no SKIP_LINK
+    * every control has an accessible name      -> no MISSING_LABEL
+    * DOM order only, no positive tabindex      -> no BROKEN_FOCUS_ORDER
+    * errors announced via role="alert"         -> no FORM_ERROR
+    * real landmarks and ordered headings
+
+  Keep this page accessible. If a11y regressions land here the test reads as a product
+  regression, which is the opposite of what it is for.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign in - SR Agent Fixture Store</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 2rem; max-width: 40rem; }
+    .row { margin: 0.75rem 0; }
+    label { display: block; margin-bottom: 0.25rem; }
+    input { padding: 0.4rem; }
+    /* Visible on focus rather than permanently hidden, so it is reachable and announced. */
+    .skip { position: absolute; left: -9999px; }
+    .skip:focus { position: static; left: auto; display: inline-block; margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to main content</a>
+
+  <header>
+    <h1>SR Agent Fixture Store</h1>
+    <nav aria-label="Main navigation">
+      <ul>
+        <li><a href="#offers">Offers</a></li>
+        <li><a href="#orders">Orders</a></li>
+        <li><a href="#favourites">Favourites</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+    <h2>Sign in</h2>
+    <form id="signin" novalidate onsubmit="return submitForm(event)">
+      <div class="row">
+        <label for="username">Username</label>
+        <input id="username" name="username" type="text" autocomplete="username" required>
+      </div>
+      <div class="row">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required>
+      </div>
+      <div class="row">
+        <button type="submit">Log in</button>
+      </div>
+    </form>
+
+    <!-- Announced when populated, so a submission result is never silent. -->
+    <p id="formError" role="alert"></p>
+    <p id="result" role="status"></p>
+  </main>
+
+  <footer>
+    <p>SR Agent fixture page. Content is static.</p>
+  </footer>
+
+  <script>
+    function submitForm(e) {
+      e.preventDefault();
+      var u = document.getElementById('username');
+      var p = document.getElementById('password');
+      var err = document.getElementById('formError');
+      var out = document.getElementById('result');
+      err.textContent = '';
+      out.textContent = '';
+      if (!u.value || !p.value) {
+        err.textContent = 'Enter both your username and your password to sign in.';
+        (u.value ? p : u).focus();
+        return false;
+      }
+      out.textContent = 'Signed in as ' + u.value + '. Welcome back.';
+      return false;
+    }
+  </script>
+</body>
+</html>

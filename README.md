@@ -23,7 +23,20 @@ resolves to private `10.72.x.x` addresses and returns 401 on every path).
 | no skip link | `SKIP_LINK` | 2.4.1 | page-load audit |
 | icon-only `<button>` | `MISSING_LABEL` | 4.1.2, 1.1.1, 2.4.6 | traversal |
 | unlabelled `<input>`s | `MISSING_LABEL` | 4.1.2 | traversal |
-| scrambled positive `tabindex` | `BROKEN_FOCUS_ORDER` | 2.4.3, 1.3.2 | LLM focus-order judge |
+
+### An accessibility defect is not an automation blocker
+
+Every control on `broken-login.html` keeps a `name`/`id` that automation can target. A real
+unlabelled input still has `name="username"`; what makes it inaccessible is having no
+`<label>`, `aria-label` or accessible name, so NVDA announces a bare "edit". An earlier
+revision stripped the `name`/`id` too, which made the form unreachable - the agent looped on
+fallback clicks (`input[name='username']`, `input#username`, `input[placeholder*='user']`)
+about every 9s until it exhausted its action budget, and never produced a usable report.
+**Keep those attributes.**
+
+Positive `tabindex` scrambling was also removed: it fought the agent for control of
+traversal and cost more than the `BROKEN_FOCUS_ORDER` finding was worth. A focus-order
+fixture belongs on its own page.
 
 The page-load findings need neither traversal nor the LLM — that audit runs unconditionally
 between navigate and parse-workflow — so the tests pin those hardest. The traversal and

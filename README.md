@@ -22,7 +22,19 @@ resolves to private `10.72.x.x` addresses and returns 401 on every path).
 | blank `<title>` | `PAGE_TITLE` | 2.4.2 | page-load audit |
 | no skip link | `SKIP_LINK` | 2.4.1 | page-load audit |
 | icon-only `<button>` | `MISSING_LABEL` | 4.1.2, 1.1.1, 2.4.6 | traversal |
-| unlabelled `<input>`s | `MISSING_LABEL` | 4.1.2 | traversal |
+
+### Keep these fixtures minimal
+
+One control, one interaction, no form and no typing. The first revision was a two-field
+login form and the agent never finished it: it could not move focus out of the browser
+address bar and burned all 900 actions (`MAX_TOTAL_ACTIONS`) without producing a report, so
+the report contract went untested entirely. The fewer turns the agent has to take, the more
+likely a scan reaches finalize. Add complexity only once the agent is reliable enough to
+earn it.
+
+The two page-load defects (blank title, missing skip link) are the ones worth leaning on:
+that audit runs unconditionally between navigate and parse-workflow, so it needs neither
+traversal nor the LLM and is unaffected by the agent getting lost.
 
 ### An accessibility defect is not an automation blocker
 

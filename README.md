@@ -14,6 +14,8 @@ resolves to private `10.72.x.x` addresses and returns 401 on every path).
 |---|---|
 | [`broken-login.html`](broken-login.html) | Pinned accessibility defects, mapped to report `violationType`s |
 | [`clean-login.html`](clean-login.html) | The accessible counterpart — should yield a zero-violation report |
+| [`multipage-home.html`](multipage-home.html) | Clean entry page; one link to `multipage-product.html` |
+| [`multipage-product.html`](multipage-product.html) | Defective destination page — tests per-violation URL attribution (ATA-1285) |
 
 ## Defects planted in `broken-login.html`
 
@@ -22,6 +24,25 @@ resolves to private `10.72.x.x` addresses and returns 401 on every path).
 | blank `<title>` | `PAGE_TITLE` | 2.4.2 | page-load audit |
 | no skip link | `SKIP_LINK` | 2.4.1 | page-load audit |
 | icon-only `<button>` | `MISSING_LABEL` | 4.1.2, 1.1.1, 2.4.6 | traversal |
+
+## `multipage-home.html` + `multipage-product.html` (ATA-1285)
+
+A pair, not a standalone page. `multipage-home.html` is the scan's entry URL: clean, one
+link, no defects. `multipage-product.html` is one hop away and carries the same two
+page-load defects as `broken-login.html` (blank `<title>`, no skip link).
+
+This pair exists to test that each violation is attributed to the page it actually occurred
+on, not to the scan's entry URL. Before ATA-1285, `ReportPersister#build_th_issue_payloads`
+stamped every TestHub issue with the scan's single entry URL regardless of which page it was
+found on — so a real multi-page defect (e.g. a product-page issue found after navigating
+from the homepage) would misleadingly show up against the homepage. A passing test here
+asserts the `PAGE_TITLE`/`SKIP_LINK` issues carry `multipage-product.html`'s URL, not
+`multipage-home.html`'s.
+
+Kept to the same "one control, one interaction" minimalism as the rest of this repo: the
+only LLM-judged action is following the single link on the home page; both defects on the
+product page are page-load findings that need no traversal and no LLM, so the whole scenario
+costs one agent turn.
 
 ### Keep these fixtures minimal
 

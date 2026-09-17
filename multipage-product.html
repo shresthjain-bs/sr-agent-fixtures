@@ -1,0 +1,32 @@
+<!doctype html>
+<!--
+  SR Agent fixture — multi-page DESTINATION (defective). Tests ATA-1285: per-violation URL
+  attribution. Consumed by BstackAIAutomation weba11y_sr_agent_scan.feature.
+
+  Reached by following the one link on multipage-home.html. Its defects must be attributed
+  to THIS page's URL in the TestHub report, not to multipage-home.html's entry URL.
+
+    1. blank <title>  -> PAGE_TITLE  (page-load audit, WCAG 2.4.2)
+    2. no skip link   -> SKIP_LINK   (page-load audit, WCAG 2.4.1)
+
+  Both defects need neither traversal nor the LLM — the page-load audit runs unconditionally
+  between navigate and parse-workflow — so they fire as soon as the agent's one click lands
+  here. That keeps the whole scenario to a single LLM-judged action (follow the link) plus
+  two zero-cost, mechanically-detected findings. Do not "fix" these; they are the fixture.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- DEFECT 1: blank title. -->
+  <title> </title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 2rem; }
+  </style>
+</head>
+<body>
+  <!-- DEFECT 2: no skip link, no landmark. -->
+  <h1>Product</h1>
+  <p>Demo product page.</p>
+</body>
+</html>

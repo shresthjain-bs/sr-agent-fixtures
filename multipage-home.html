@@ -1,0 +1,36 @@
+<!doctype html>
+<!--
+  SR Agent fixture — multi-page ENTRY point (clean). Tests ATA-1285: per-violation URL
+  attribution. Consumed by BstackAIAutomation weba11y_sr_agent_scan.feature.
+
+  This page carries no defects of its own. Its only job is to send the agent one hop to
+  multipage-product.html, which does carry defects. A correct report attributes those
+  defects to the product page's URL, not to this entry URL — the exact bug ATA-1285 fixes
+  (ReportPersister#build_th_issue_payloads previously stamped every violation with the
+  scan's single entry URL, regardless of which page it was actually found on).
+
+  DELIBERATELY MINIMAL: one link, no form, no typing. Same reasoning as broken-login.html —
+  fewer turns means a higher chance the scan reaches finalize and the per-URL attribution
+  contract actually gets tested.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Home - SR Agent Fixture</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 2rem; }
+    a.cta { font-size: 1.25rem; }
+    .skip { position: absolute; left: -9999px; }
+    .skip:focus { position: static; left: auto; display: inline-block; margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to main content</a>
+
+  <main id="main">
+    <h1>Home</h1>
+    <p><a id="product-link" class="cta" href="multipage-product.html">View product</a></p>
+  </main>
+</body>
+</html>

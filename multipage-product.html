@@ -3,30 +3,59 @@
   SR Agent fixture — multi-page DESTINATION (defective). Tests ATA-1285: per-violation URL
   attribution. Consumed by BstackAIAutomation weba11y_sr_agent_scan.feature.
 
-  Reached by following the one link on multipage-home.html. Its defects must be attributed
-  to THIS page's URL in the TestHub report, not to multipage-home.html's entry URL.
+  Reached by following the one link on multipage-home.html. Its defect must be attributed to
+  THIS page's URL in the TestHub report, not to multipage-home.html's entry URL.
 
-    1. blank <title>  -> PAGE_TITLE  (page-load audit, WCAG 2.4.2)
-    2. no skip link   -> SKIP_LINK   (page-load audit, WCAG 2.4.1)
+    icon-only <button> -> MISSING_LABEL (traversal, WCAG 4.1.2/1.1.1/2.4.6)
 
-  Both defects need neither traversal nor the LLM — the page-load audit runs unconditionally
-  between navigate and parse-workflow — so they fire as soon as the agent's one click lands
-  here. That keeps the whole scenario to a single LLM-judged action (follow the link) plus
-  two zero-cost, mechanically-detected findings. Do not "fix" these; they are the fixture.
+  NOT a page-load defect (blank <title>, missing skip link, as in broken-login.html) on
+  purpose. In ai-accessibility, the page-load audit is wired to the STARTING phase only
+  (phases.js: "One per pipeline: STARTING owns it.") and runs once, against the scan's entry
+  URL, right after the single session.navigateTo(request.url) in startingPhase.js. It is
+  never re-run after a mid-scan navigation, so a page-load-only defect placed on this page
+  would never be checked — the agent would sail past it with no finding at all.
+  MISSING_LABEL, by contrast, is checked per traversal action in checkViolations.js
+  regardless of which page focus currently sits on, so it is the right defect type to plant
+  on a page other than the entry URL. That is also why this page's OWN title and skip link
+  are kept clean: they are never audited here, so leaving them broken would be noise, not a
+  tested defect.
+
+  The workflow must give the agent a second action on this page (e.g. "...then activate the
+  button on the product page") so it actually lands on the button — MISSING_LABEL only fires
+  once traversal reaches the element, not just by virtue of being on this page.
+
+  DELIBERATELY MINIMAL: one control, no form, no typing — same reasoning as
+  broken-login.html. The button keeps an id so automation can target it; what makes it
+  inaccessible is having no accessible name, so NVDA announces a bare "button".
 -->
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- DEFECT 1: blank title. -->
-  <title> </title>
+  <title>Product - SR Agent Fixture</title>
   <style>
     body { font-family: system-ui, sans-serif; margin: 2rem; }
+    button { font-size: 1.25rem; padding: 0.6rem 1.2rem; }
+    .skip { position: absolute; left: -9999px; }
+    .skip:focus { position: static; left: auto; display: inline-block; margin-bottom: 1rem; }
   </style>
 </head>
 <body>
-  <!-- DEFECT 2: no skip link, no landmark. -->
-  <h1>Product</h1>
-  <p>Demo product page.</p>
+  <a class="skip" href="#main">Skip to main content</a>
+
+  <main id="main">
+    <h1>Product</h1>
+
+    <!-- DEFECT: icon-only button, no accessible name. Announced as just "button". -->
+    <button id="action" onclick="run()">&#10148;</button>
+
+    <p id="result" role="status"></p>
+  </main>
+
+  <script>
+    function run() {
+      document.getElementById('result').textContent = 'Done.';
+    }
+  </script>
 </body>
 </html>

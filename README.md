@@ -28,21 +28,33 @@ resolves to private `10.72.x.x` addresses and returns 401 on every path).
 ## `multipage-home.html` + `multipage-product.html` (ATA-1285)
 
 A pair, not a standalone page. `multipage-home.html` is the scan's entry URL: clean, one
-link, no defects. `multipage-product.html` is one hop away and carries the same two
-page-load defects as `broken-login.html` (blank `<title>`, no skip link).
+link, no defects. `multipage-product.html` is one hop away and carries one pinned defect:
+an icon-only `<button>`, the same `MISSING_LABEL` pattern as `broken-login.html`'s defect 3.
 
 This pair exists to test that each violation is attributed to the page it actually occurred
 on, not to the scan's entry URL. Before ATA-1285, `ReportPersister#build_th_issue_payloads`
 stamped every TestHub issue with the scan's single entry URL regardless of which page it was
 found on — so a real multi-page defect (e.g. a product-page issue found after navigating
 from the homepage) would misleadingly show up against the homepage. A passing test here
-asserts the `PAGE_TITLE`/`SKIP_LINK` issues carry `multipage-product.html`'s URL, not
+asserts the `MISSING_LABEL` issue carries `multipage-product.html`'s URL, not
 `multipage-home.html`'s.
 
-Kept to the same "one control, one interaction" minimalism as the rest of this repo: the
-only LLM-judged action is following the single link on the home page; both defects on the
-product page are page-load findings that need no traversal and no LLM, so the whole scenario
-costs one agent turn.
+**Why the product page's defect is `MISSING_LABEL` and not a page-load defect:** in
+`ai-accessibility`, the page-load audit (what catches `broken-login.html`'s blank `<title>`
+and missing skip link) is wired to the scan's `STARTING` phase only
+(`src/services/web_sr_agent_scan/phases.js`: *"One per pipeline: STARTING owns it."*) and
+runs exactly once, against the scan's entry URL, immediately after the single
+`session.navigateTo(request.url)` in `startingPhase.js`. It is never re-run after a mid-scan
+navigation. A page-load-only defect placed on `multipage-product.html` would therefore never
+be checked — the agent would land on the page and nothing would look at it.
+`MISSING_LABEL`, checked in `checkViolations.js`, fires per traversal action (`NAVIGATE_NEXT`
+etc. producing empty or generic-only spoken output) regardless of which page focus currently
+sits on — so it is the one defect type that actually gets exercised on a non-entry page.
+
+The workflow must therefore give the agent a real second action on the product page, not
+just a navigation: `"Click the 'View product' link, then activate the button on the product
+page."` Two actions, two pages, one pinned defect — still the same "one control, one
+interaction" minimalism as the rest of this repo, just spread across two pages instead of one.
 
 ### Keep these fixtures minimal
 

@@ -4,10 +4,14 @@
   attribution. Consumed by BstackAIAutomation weba11y_sr_agent_scan.feature.
 
   This page carries no defects of its own. Its only job is to send the agent one hop to
-  multipage-product.html, which does carry defects. A correct report attributes those
-  defects to the product page's URL, not to this entry URL — the exact bug ATA-1285 fixes
+  multipage-product.html, which does. A correct report attributes that defect to the product
+  page's URL, not to this entry URL — the exact bug ATA-1285 fixes
   (ReportPersister#build_th_issue_payloads previously stamped every violation with the
   scan's single entry URL, regardless of which page it was actually found on).
+
+  Workflow: "Click the 'View product' link, then activate the button on the product page."
+  Two actions, two pages, one pinned defect — see multipage-product.html for why that defect
+  is a traversal-checked MISSING_LABEL rather than a page-load defect like broken-login.html's.
 
   DELIBERATELY MINIMAL: one link, no form, no typing. Same reasoning as broken-login.html —
   fewer turns means a higher chance the scan reaches finalize and the per-URL attribution

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Desk Lamps &ndash; NestMart</title>
+<style>
+  :root{--ink:#1a1a2e;--muted:#5b6472;--line:#e6e8ec;--brand:#0a7d5a;--brand-d:#086749;--amber:#f5a623;--bg:#f7f8fa}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.5}
+  a{color:var(--brand)}
+  img{display:block}
+  .skip{position:absolute;left:-999px;top:0;background:#fff;padding:10px 16px;border:2px solid var(--brand);z-index:50}
+  .skip:focus{left:8px}
+  .utility{background:var(--brand-d);color:#dff3ec;font-size:13px}
+  .utility .in{max-width:1140px;margin:0 auto;padding:7px 20px;display:flex;gap:20px;align-items:center}
+  .utility a{color:#dff3ec;text-decoration:none}
+  .utility .right{margin-left:auto;display:flex;gap:18px}
+  header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:40}
+  .bar{display:flex;align-items:center;gap:22px;max-width:1140px;margin:0 auto;padding:14px 20px}
+  .logo{font-weight:800;font-size:22px;color:var(--brand);letter-spacing:-.5px;text-decoration:none;display:flex;align-items:center;gap:8px}
+  nav.main ul{display:flex;gap:18px;list-style:none;margin:0;padding:0}
+  nav.main a{color:var(--ink);text-decoration:none;font-size:15px;padding:6px 2px}
+  nav.main a.sale{color:#c0392b;font-weight:700}
+  .search{margin-left:auto;display:flex;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .search input{border:0;background:transparent;padding:10px 12px;font-size:14px;width:240px;outline:none}
+  .search button{border:0;background:transparent;padding:10px 12px;cursor:pointer;font-size:16px}
+  .icons{display:flex;gap:6px}
+  .icons a,.cart{border:0;background:transparent;cursor:pointer;font-size:18px;padding:9px 10px;text-decoration:none;color:var(--ink);position:relative}
+  .badge{position:absolute;top:2px;right:0;background:var(--amber);color:#3a2a00;border-radius:10px;font-size:11px;font-weight:700;padding:0 5px}
+  .crumbs{max-width:1140px;margin:0 auto;padding:14px 20px 0;font-size:13px;color:var(--muted)}
+  .crumbs a{color:var(--muted);text-decoration:none}
+  .hero{max-width:1140px;margin:12px auto 0;padding:0 20px}
+  .hero .band{background:linear-gradient(100deg,#0a7d5a,#0e9e73);color:#fff;border-radius:16px;padding:28px 30px;display:flex;align-items:center;gap:30px;overflow:hidden}
+  .hero h1{font-size:30px;margin:0 0 6px}
+  .hero p{margin:0;color:#e5f6ef;max-width:52ch}
+  .hero img{width:230px;height:150px;object-fit:cover;border-radius:12px;margin-left:auto}
+  main{max-width:1140px;margin:0 auto;padding:22px 20px}
+  .toolbar{display:flex;align-items:center;gap:14px;margin-bottom:18px;flex-wrap:wrap}
+  .toolbar .count{color:var(--muted);font-size:14px}
+  .toolbar .sortwrap{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:14px}
+  .toolbar select{border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:14px;background:#fff}
+  .layout{display:grid;grid-template-columns:220px 1fr;gap:26px;align-items:start}
+  aside.filters{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px}
+  aside.filters h2{font-size:14px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin:0 0 10px}
+  aside.filters fieldset{border:0;padding:0;margin:0 0 18px}
+  aside.filters legend{font-weight:700;font-size:14px;margin-bottom:8px;padding:0}
+  aside.filters label{display:flex;align-items:center;gap:8px;font-size:14px;margin-bottom:7px;color:#2c3540}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+  .card .imgwrap{position:relative}
+  .card img{width:100%;height:190px;object-fit:cover;background:#eef1f4}
+  .tag{position:absolute;top:10px;left:10px;background:#fff;border-radius:20px;font-size:12px;font-weight:700;padding:3px 10px;color:var(--brand)}
+  .card .body{padding:14px;display:flex;flex-direction:column;gap:6px;flex:1}
+  .card h3{font-size:16px;margin:0}
+  .card h3 a{text-decoration:none;color:var(--ink)}
+  .rating{font-size:13px;color:var(--muted)}
+  .stars{color:var(--amber)}
+  .price{font-weight:800;font-size:17px}
+  .price .old{color:var(--muted);font-weight:500;font-size:14px;text-decoration:line-through;margin-left:6px}
+  .row{margin-top:auto;padding-top:8px}
+  .btn{display:inline-block;background:#fff;color:var(--brand);border:1px solid var(--brand);border-radius:8px;padding:9px 14px;font-size:14px;cursor:pointer;text-decoration:none}
+  .promo{margin:34px 0;background:#fff;border:1px dashed var(--brand);border-radius:12px;padding:20px;display:flex;gap:16px;align-items:center}
+  .features{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:30px 0}
+  .feature{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center}
+  .feature .ic{font-size:24px}
+  .feature h3{font-size:15px;margin:8px 0 4px}
+  .feature p{font-size:13px;color:var(--muted);margin:0}
+  .news{background:#0f2b23;color:#eafaf3;border-radius:16px;padding:26px;margin:30px 0;display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+  .news h2{margin:0 0 4px;font-size:20px}
+  .news p{margin:0;color:#bfe6d7;font-size:14px}
+  .news form{margin-left:auto;display:flex;gap:8px}
+  .news input{border:0;border-radius:8px;padding:11px 12px;font-size:14px;width:220px}
+  .news button{background:var(--amber);color:#3a2a00;border:0;border-radius:8px;padding:11px 16px;font-weight:700;cursor:pointer}
+  footer{background:#12231d;color:#cfe4db;margin-top:20px}
+  .foot{max-width:1140px;margin:0 auto;padding:36px 20px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:24px}
+  .foot h3{font-size:14px;color:#fff;margin:0 0 12px}
+  .foot ul{list-style:none;margin:0;padding:0}
+  .foot li{margin-bottom:8px}
+  .foot a{color:#cfe4db;text-decoration:none;font-size:14px}
+  .social{display:flex;gap:10px;margin-top:12px}
+  .social a{font-size:18px;text-decoration:none}
+  .legal{border-top:1px solid #23413659;color:#8fb3a6;font-size:13px}
+  .legal .in{max-width:1140px;margin:0 auto;padding:16px 20px;display:flex;gap:16px;flex-wrap:wrap}
+  @media(max-width:900px){.layout{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}.features{grid-template-columns:repeat(2,1fr)}.foot{grid-template-columns:1fr 1fr}}
+  /* Cookie consent (BROKEN modal) */
+  .ck-backdrop{position:fixed;inset:0;background:rgba(10,20,25,.5);z-index:200}
+  .ck-modal{position:fixed;z-index:210;left:50%;top:50%;transform:translate(-50%,-50%);width:min(520px,92vw);background:#fff;border-radius:14px;box-shadow:0 24px 60px rgba(0,0,0,.35);padding:24px}
+  .ck-modal h2{margin:0 0 8px;font-size:20px}
+  .ck-modal p{margin:0 0 16px;color:var(--muted);font-size:14px}
+  .ck-actions{display:flex;gap:10px;flex-wrap:wrap}
+  .ck-accept{background:var(--brand);color:#fff;border:0;border-radius:8px;padding:12px 18px;font-size:14px;cursor:pointer;font-weight:600}
+  .ck-reject{background:#fff;color:var(--brand);border:1px solid var(--brand);border-radius:8px;padding:12px 18px;font-size:14px;cursor:pointer;font-weight:600}
+</style>
+</head>
+<body>
+<!-- INJECTED (subtle): SKIP_LINK broken. Target #maincontent-typo does not exist, so activating moves no focus. -->
+<a class="skip" href="#maincontent-typo">Skip to main content</a>
+
+<div class="utility">
+  <div class="in">
+    <span>Free delivery over $50</span>
+    <div class="right">
+      <a href="#">Store locator</a>
+      <a href="#">Help centre</a>
+      <a href="#">Sign in</a>
+    </div>
+  </div>
+</div>
+
+<header>
+  <div class="bar">
+    <a class="logo" href="index.html"><span aria-hidden="true">🌿</span> NestMart</a>
+    <nav class="main" aria-label="Primary">
+      <ul>
+        <li><a href="index.html">Lighting</a></li>
+        <li><a href="#">Furniture</a></li>
+        <li><a href="#">Decor</a></li>
+        <li><a href="#">Rugs</a></li>
+        <li><a href="#">Outdoor</a></li>
+        <li><a class="sale" href="#">Sale</a></li>
+      </ul>
+    </nav>
+    <form class="search" role="search" onsubmit="return false">
+      <!-- PASS: input is properly labelled via visually-hidden label -->
+      <label for="q" style="position:absolute;left:-999px">Search products</label>
+      <input id="q" type="text" placeholder="Search desk lamps, sofas, rugs...">
+      <!-- INJECTED (subtle): MISSING_LABEL. Icon-only submit button, no text, no aria-label. -->
+      <button type="submit"><svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.5" y2="16.5"></line></svg></button>
+    </form>
+    <div class="icons">
+      <!-- PASS: labelled icon links -->
+      <a href="#" aria-label="Wishlist, 2 saved">❤️<span class="badge">2</span></a>
+      <a class="cart" href="#" aria-label="Cart, 0 items">🛒</a>
+    </div>
+  </div>
+</header>
+
+<nav class="crumbs" aria-label="Breadcrumb">
+  <a href="index.html">Home</a> / <a href="index.html">Lighting</a> / Desk lamps
+</nav>
+
+<section class="hero" aria-label="Category highlight">
+  <div class="band">
+    <div>
+      <h1>Desk Lamps</h1>
+      <p>Focused light for work and study. Dimmable LEDs, adjustable arms, and warm-to-cool tones, from $29.</p>
+    </div>
+    <img src="https://picsum.photos/seed/nestmart-hero/460/300" alt="A warmly lit home office desk with an adjustable lamp, notebook and a mug">
+  </div>
+</section>
+
+<main id="main">
+  <div class="toolbar">
+    <span class="count">9 of 42 results for &ldquo;desk lamps&rdquo;</span>
+    <div class="sortwrap">
+      <!-- PASS: sort control is a properly labelled native select -->
+      <label for="sort">Sort by</label>
+      <select id="sort">
+        <option>Recommended</option>
+        <option>Price: low to high</option>
+        <option>Price: high to low</option>
+        <option>Customer rating</option>
+        <option>Newest</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="layout">
+    <aside class="filters" aria-label="Filters">
+      <h2>Refine</h2>
+      <fieldset>
+        <legend>Price</legend>
+        <label><input type="checkbox"> Under $40</label>
+        <label><input type="checkbox"> $40 &ndash; $70</label>
+        <label><input type="checkbox"> $70 &ndash; $120</label>
+        <label><input type="checkbox"> $120+</label>
+      </fieldset>
+      <fieldset>
+        <legend>Finish</legend>
+        <label><input type="checkbox"> Matte black</label>
+        <label><input type="checkbox"> Brass</label>
+        <label><input type="checkbox"> White</label>
+        <label><input type="checkbox"> Wood</label>
+      </fieldset>
+      <fieldset>
+        <legend>Feature</legend>
+        <label><input type="checkbox"> Dimmable</label>
+        <label><input type="checkbox"> USB port</label>
+        <label><input type="checkbox"> Touch control</label>
+      </fieldset>
+    </aside>
+
+    <div>
+      <div class="grid">
+        <div class="card">
+          <div class="imgwrap">
+            <img src="https://picsum.photos/seed/lamp-aperture/500/380" alt="Slate grey Aperture LED desk lamp with an adjustable matte-finish arm">
+            <span class="tag">Bestseller</span>
+          </div>
+          <div class="body">
+            <h3><a href="product.html">Aperture LED Desk Lamp</a></h3>
+            <div class="rating"><span class="stars" aria-hidden="true">★★★★★</span> 4.8 (128 reviews)</div>
+            <div class="price">$48.00 <span class="old">$59.00</span></div>
+            <div class="row"><a href="product.html" class="btn">View details</a></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="imgwrap">
+            <img src="https://picsum.photos/seed/lamp-halden/500/380" alt="Brass Halden swing-arm desk lamp mounted on a wooden desk">
+          </div>
+          <div class="body">
+            <h3><a href="product.html#halden">Halden Swing-Arm Lamp</a></h3>
+            <div class="rating"><span class="stars" aria-hidden="true">★★★★☆</span> 4.4 (86 reviews)</div>
+            <div class="price">$72.00</div>
+            <div class="row"><a href="product.html#halden" class="btn">View details</a></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="imgwrap">
+            <img src="https://picsum.photos/seed/lamp-nook/500/380" alt="White minimalist Nook clamp lamp attached to a shelf">
+          </div>
+          <div class="body">
+            <h3><a href="product.html#nook">Nook Clamp Lamp</a></h3>
+            <div class="rating"><span class="stars" aria-hidden="true">★★★★☆</span> 4.2 (54 reviews)</div>
+            <div class="price">$39.00</div>
+            <div class="row"><a href="product.html#nook" class="btn">View details</a></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="imgwrap">
+            <img src="https://picsum.photos/seed/lamp-orbit/500/380" alt="Black Orbit architect lamp with a wide dimmable head">
+          </div>
+          <div class="body">
+            <h3><a href="product.html#orbit">Orbit Architect Lamp</a></h3>
+            <div class="rating"><span class="stars" aria-hidden="true">★★★★★</span> 4.9 (203 reviews)</div>
+            <div class="price">$95.00</div>
+            <div class="row"><a href="product.html#orbit" class="btn">View details</a></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="imgwrap">
+            <img src="https://picsum.photos/seed/lamp-flux/500/380" alt="Wooden Flux tripod floor-standing reading lamp">
+            <span class="tag">New</span>
+          </div>
+          <div class="body">
+            <h3><a href="product.html#flux">Flux Reading Lamp</a></h3>
+            <div class="rating"><span class="stars" aria-hidden="true">★★★★☆</span> 4.5 (31 reviews)</div>
+            <div class="price">$64.00</div>
+            <div class="row"><a href="product.html#flux" class="btn">View details</a></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="imgwrap">
+            <img src="https://picsum.photos/seed/lamp-mono/500/380" alt="Compact white Mono task lamp with a touch dimmer base">
+          </div>
+          <div class="body">
+            <h3><a href="product.html#mono">Mono Task Lamp</a></h3>
+            <div class="rating"><span class="stars" aria-hidden="true">★★★★☆</span> 4.3 (77 reviews)</div>
+            <div class="price">$29.00</div>
+            <div class="row"><a href="product.html#mono" class="btn">View details</a></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="promo">
+        <img src="https://picsum.photos/seed/nestmart-promo/120/90" alt="" style="border-radius:10px;width:120px;height:90px;object-fit:cover">
+        <div>
+          <strong>Study season sale &middot; up to 25% off lighting</strong>
+          <div style="color:var(--muted);font-size:14px">Ends Sunday. Discount shown at checkout.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="features">
+    <div class="feature"><div class="ic" aria-hidden="true">🚚</div><h3>Free delivery</h3><p>On orders over $50</p></div>
+    <div class="feature"><div class="ic" aria-hidden="true">↩️</div><h3>30-day returns</h3><p>No-quibble refunds</p></div>
+    <div class="feature"><div class="ic" aria-hidden="true">🛡️</div><h3>2-year warranty</h3><p>On all lighting</p></div>
+    <div class="feature"><div class="ic" aria-hidden="true">💬</div><h3>Expert help</h3><p>7 days a week</p></div>
+  </div>
+
+  <section class="news" aria-label="Newsletter">
+    <div>
+      <h2>Get 10% off your first order</h2>
+      <p>Home ideas and offers, straight to your inbox.</p>
+    </div>
+    <form onsubmit="return false">
+      <label for="news-email" style="position:absolute;left:-999px">Email address</label>
+      <input id="news-email" type="email" placeholder="you@example.com">
+      <button type="submit">Subscribe</button>
+    </form>
+  </section>
+</main>
+
+<footer>
+  <div class="foot">
+    <div>
+      <div class="logo" style="color:#fff">🌿 NestMart</div>
+      <p style="color:#9fc2b6;font-size:14px;max-width:34ch">Well-made home essentials, designed to last and priced to be fair.</p>
+      <div class="social">
+        <a href="#" aria-label="NestMart on Instagram">📷</a>
+        <a href="#" aria-label="NestMart on Facebook">📘</a>
+        <a href="#" aria-label="NestMart on Pinterest">📌</a>
+      </div>
+    </div>
+    <div><h3>Shop</h3><ul><li><a href="#">Lighting</a></li><li><a href="#">Furniture</a></li><li><a href="#">Decor</a></li><li><a href="#">Outdoor</a></li></ul></div>
+    <div><h3>Help</h3><ul><li><a href="#">Delivery</a></li><li><a href="#">Returns</a></li><li><a href="#">Track order</a></li><li><a href="#">Contact us</a></li></ul></div>
+    <div><h3>Company</h3><ul><li><a href="#">About</a></li><li><a href="#">Careers</a></li><li><a href="#">Sustainability</a></li><li><a href="#">Press</a></li></ul></div>
+  </div>
+  <div class="legal"><div class="in"><span>&copy; 2026 NestMart Ltd.</span><a href="#" style="color:#8fb3a6">Privacy</a><a href="#" style="color:#8fb3a6">Terms</a><a href="#" style="color:#8fb3a6">Cookies</a></div></div>
+</footer>
+
+<!-- INJECTED: MODAL_FOCUS (blocking cookie dialog, focus NOT moved in). It HAS role=dialog + aria-modal
+     (so the agent detects it and it is announced), but on load focus is NOT moved into it, it is not
+     trapped, and Escape does not close it. This is the "modal cookie banner, focus does not move to it"
+     case. -->
+<div id="ck-backdrop" class="ck-backdrop" hidden></div>
+<div id="ck-modal" class="ck-modal" role="dialog" aria-modal="true" aria-labelledby="ck-title" hidden>
+  <h2 id="ck-title">We value your privacy</h2>
+  <p>We use cookies to personalise content, provide social features and analyse our traffic. You can accept all or reject non-essential cookies.</p>
+  <div class="ck-actions">
+    <button type="button" class="ck-accept" onclick="ckClose()">Accept all</button>
+    <button type="button" class="ck-reject" onclick="ckClose()">Reject non-essential</button>
+  </div>
+</div>
+
+<script>
+  // BROKEN cookie modal: shows on load but does NOT move focus into itself, installs no focus trap,
+  // and has no Escape handler. Dismissible only by clicking a button.
+  (function(){
+    var backdrop = document.getElementById('ck-backdrop');
+    var modal = document.getElementById('ck-modal');
+    window.ckClose = function(){ backdrop.hidden = true; modal.hidden = true; };
+    window.addEventListener('load', function(){ backdrop.hidden = false; modal.hidden = false; });
+  })();
+</script>
+</body>
+</html>

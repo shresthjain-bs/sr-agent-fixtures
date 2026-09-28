@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Find flights &ndash; SkyHop</title>
+<style>
+  :root{--ink:#0f1e2e;--muted:#5a6675;--line:#e1e6ec;--brand:#0057d9;--brand-d:#0044a8;--amber:#ff8a00;--bg:#eef2f7}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.5}
+  a{color:var(--brand)}
+  img{display:block}
+  .skip{position:absolute;left:-999px;top:0;background:#fff;padding:10px 16px;border:2px solid var(--brand);z-index:120}
+  .skip:focus{left:8px}
+  header{background:#fff;border-bottom:1px solid var(--line)}
+  .bar{display:flex;align-items:center;gap:22px;max-width:1080px;margin:0 auto;padding:14px 20px}
+  .logo{font-weight:800;font-size:21px;color:var(--brand);text-decoration:none;display:flex;align-items:center;gap:8px}
+  nav.main ul{display:flex;gap:20px;list-style:none;margin:0;padding:0}
+  nav.main a{color:var(--ink);text-decoration:none;font-size:15px}
+  .bar .right{margin-left:auto;display:flex;gap:16px;align-items:center}
+  .bar .right a{color:var(--ink);text-decoration:none;font-size:14px}
+  .hero{background:linear-gradient(120deg,#0057d9,#2c86ff);color:#fff}
+  .hero .in{max-width:1080px;margin:0 auto;padding:30px 20px 26px}
+  .hero h1{font-size:30px;margin:0 0 4px}
+  .hero p{margin:0 0 18px;color:#dbe8ff}
+  .searchcard{background:#fff;border-radius:14px;padding:16px;display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:14px;align-items:end;box-shadow:0 10px 30px rgba(0,20,60,.18)}
+  .field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--ink)}
+  .field input{width:100%;border:1px solid var(--line);border-radius:8px;padding:11px 12px;font-size:15px}
+  .btn{background:var(--amber);color:#3a2400;border:0;border-radius:8px;padding:12px 20px;font-size:15px;cursor:pointer;font-weight:700}
+  .promo{max-width:1080px;margin:14px auto 0;padding:0 20px}
+  .promo .in{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+  .promo input{border:1px solid var(--line);border-radius:6px;padding:7px 10px;font-size:13px}
+  main{max-width:1080px;margin:0 auto;padding:22px 20px}
+  .layout{display:grid;grid-template-columns:220px 1fr;gap:24px;align-items:start}
+  aside.filters{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px}
+  aside.filters fieldset{border:0;padding:0;margin:0 0 18px}
+  aside.filters legend{font-weight:700;font-size:14px;margin-bottom:8px;padding:0}
+  aside.filters label{display:flex;align-items:center;gap:8px;font-size:14px;margin-bottom:7px}
+  .rhead{display:flex;align-items:center;gap:10px;margin:0 0 14px}
+  h2{font-size:18px;margin:0}
+  .sortbtn{margin-left:auto;border:1px solid var(--line);background:#fff;border-radius:8px;padding:9px 11px;font-size:16px;cursor:pointer}
+  .result{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;align-items:center;gap:18px;margin-bottom:12px}
+  .airline{display:flex;align-items:center;gap:10px;min-width:150px}
+  .airline img{width:36px;height:36px;border-radius:8px;object-fit:cover}
+  .airline .nm{font-size:13px;color:var(--muted)}
+  .leg{font-weight:700;font-size:18px}
+  .muted{color:var(--muted);font-size:13px}
+  .price{margin-left:auto;text-align:right}
+  .price .amt{font-weight:800;font-size:20px}
+  .select{background:var(--brand);color:#fff;border-radius:8px;padding:10px 18px;font-size:14px;cursor:pointer;text-decoration:none;display:inline-block;margin-top:6px}
+  .dests{margin:30px 0}
+  .dests h2{margin-bottom:12px}
+  .destgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .dest{position:relative;border-radius:12px;overflow:hidden}
+  .dest img{width:100%;height:130px;object-fit:cover}
+  .dest .cap{position:absolute;left:0;bottom:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;padding:20px 12px 10px;font-weight:700}
+  .badges{display:flex;gap:22px;justify-content:center;margin:26px 0;flex-wrap:wrap;color:var(--muted);font-size:14px}
+  .chat{position:fixed;right:18px;bottom:18px;width:250px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.15);z-index:70}
+  .chat .head{background:var(--brand);color:#fff;border-radius:12px 12px 0 0;padding:10px 14px;font-size:14px;font-weight:600}
+  .chat .body{padding:12px}
+  .chat button{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#f7f9fc;border-radius:8px;padding:9px 10px;margin-bottom:8px;font-size:13px;cursor:pointer}
+  footer{background:#0b1b30;color:#c3d4ea;margin-top:26px}
+  .foot{max-width:1080px;margin:0 auto;padding:32px 20px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:22px}
+  .foot h3{font-size:14px;color:#fff;margin:0 0 12px}
+  .foot ul{list-style:none;margin:0;padding:0}
+  .foot li{margin-bottom:8px}
+  .foot a{color:#c3d4ea;text-decoration:none;font-size:14px}
+  .legal{border-top:1px solid #1f3350;color:#8aa4c4;font-size:12px}
+  .legal .in{max-width:1080px;margin:0 auto;padding:16px 20px}
+  @media(max-width:900px){.searchcard{grid-template-columns:1fr 1fr}.layout{grid-template-columns:1fr}.destgrid{grid-template-columns:repeat(2,1fr)}.foot{grid-template-columns:1fr 1fr}}
+  /* Cookie notice (non-modal bar with some unlabelled icon buttons) */
+  .ck-bar{position:fixed;left:0;right:0;bottom:0;background:#0b1b30;color:#dbe8ff;padding:12px 20px;display:flex;gap:14px;align-items:center;justify-content:center;flex-wrap:wrap;z-index:150;font-size:14px}
+  .ck-bar a{color:#fff}
+  .ck-bar .txt{max-width:56ch}
+  .ck-bar button{border:0;border-radius:6px;padding:8px 14px;font-size:14px;cursor:pointer}
+  .ck-bar .accept{background:var(--amber);color:#3a2400;font-weight:700}
+  .ck-bar .reject{background:#fff;color:#0b1b30}
+  .ck-bar .ico{background:transparent;color:#dbe8ff;font-size:16px;padding:8px 10px}
+  /* Choose-your-fare modal (BROKEN - roleless, blind spot) */
+  .fm-backdrop{position:fixed;inset:0;background:rgba(6,20,40,.5);z-index:180}
+  .fm-modal{position:fixed;z-index:190;left:50%;top:50%;transform:translate(-50%,-50%);width:min(460px,92vw);background:#fff;border-radius:14px;padding:22px;box-shadow:0 24px 60px rgba(0,0,0,.35)}
+  .fm-modal h2{margin:0 0 4px;font-size:20px}
+  .fm-modal p{margin:0 0 14px;color:var(--muted);font-size:14px}
+  .fm-close{position:absolute;top:12px;right:14px;border:0;background:transparent;cursor:pointer;line-height:1;color:var(--ink)}
+  .fm-opt{display:flex;justify-content:space-between;align-items:center;gap:12px;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:10px;cursor:pointer;background:#fff;width:100%;text-align:left;font-size:14px}
+  .fm-opt b{font-size:16px}
+</style>
+</head>
+<body>
+<!-- PASS: working skip link -->
+<a class="skip" href="#main">Skip to main content</a>
+
+<header>
+  <div class="bar">
+    <a class="logo" href="index.html"><span aria-hidden="true">✈️</span> SkyHop</a>
+    <nav class="main" aria-label="Primary">
+      <ul>
+        <li><a href="#">Book</a></li>
+        <li><a href="#">Deals</a></li>
+        <li><a href="#">Check-in</a></li>
+        <li><a href="#">Manage booking</a></li>
+        <li><a href="#">Help</a></li>
+      </ul>
+    </nav>
+    <div class="right">
+      <a href="#">🌐 EN / GBP</a>
+      <a href="#">Sign in</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="in">
+    <h1>Find flights</h1>
+    <p>Low fares to 120+ destinations. No change fees on flexible tickets.</p>
+    <form class="searchcard" onsubmit="doSearch();return false">
+      <!-- PASS: all search fields correctly labelled -->
+      <div class="field"><label for="from">From</label><input id="from" type="text" value="London (LHR)"></div>
+      <div class="field"><label for="to">To</label><input id="to" type="text" value="Lisbon (LIS)"></div>
+      <div class="field"><label for="date">Departure</label><input id="date" type="text" value="12 Oct 2026"></div>
+      <button class="btn" type="submit">Search flights</button>
+    </form>
+  </div>
+</section>
+
+<!-- INJECTED (subtle): INITIAL_FOCUS. On load, focus is forced to this mid-page promo field, not the top of the page. Field itself is correctly labelled. -->
+<div class="promo">
+  <div class="in">
+    <label for="promo">Promo code</label>
+    <input id="promo" type="text" placeholder="e.g. AUTUMN10">
+    <span>Apply a code to see discounted fares.</span>
+  </div>
+</div>
+
+<main id="main">
+  <div class="layout">
+    <aside class="filters" aria-label="Filter results">
+      <fieldset>
+        <legend>Stops</legend>
+        <label><input type="checkbox" checked> Direct</label>
+        <label><input type="checkbox"> 1 stop</label>
+        <label><input type="checkbox"> 2+ stops</label>
+      </fieldset>
+      <fieldset>
+        <legend>Departure time</legend>
+        <label><input type="checkbox"> Morning</label>
+        <label><input type="checkbox"> Afternoon</label>
+        <label><input type="checkbox"> Evening</label>
+      </fieldset>
+      <fieldset>
+        <legend>Airline</legend>
+        <label><input type="checkbox"> SkyHop</label>
+        <label><input type="checkbox"> Partner airlines</label>
+      </fieldset>
+    </aside>
+
+    <div>
+      <!-- Results are revealed only after the user submits the search (realistic flow). -->
+      <div id="results" hidden>
+      <div class="rhead">
+        <h2 id="results-heading" tabindex="-1">3 flights found &middot; London to Lisbon</h2>
+        <!-- INJECTED (subtle): MISSING_LABEL. Icon-only sort button, no text/aria-label. -->
+        <button class="sortbtn" type="button"><svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v16M7 4l-3 3M7 4l3 3M17 20V4M17 20l-3-3M17 20l3-3"></path></svg></button>
+      </div>
+
+      <!-- INJECTED (obvious): FOCUS_TRAP. The chat widget now sits in the results tab order (right after the results heading), so tabbing toward the flights enters it - then Tab cycles among its 3 buttons forever and Escape does nothing. Reading/links navigation can still reach the flights below. -->
+      <section class="chat" id="chat" aria-label="SkyBot chat">
+        <div class="head">SkyBot &middot; online</div>
+        <div class="body">
+          <button type="button">Change my booking</button>
+          <button type="button">Baggage rules</button>
+          <button type="button">Talk to an agent</button>
+        </div>
+      </section>
+
+      <div class="result">
+        <div class="airline"><img src="https://picsum.photos/seed/skyhop-logo/72/72" alt=""><div><div>SkyHop</div><div class="nm">SH 218</div></div></div>
+        <div><div class="leg">06:40 &rarr; 09:55</div><div class="muted">Direct &middot; 2h 15m &middot; LHR&ndash;LIS</div></div>
+        <div class="price"><div class="amt">$128</div>
+          <!-- PASS: Select is a real link with a UNIQUE accessible name; it opens the fare modal, then continues. -->
+          <a class="select" href="passengers.html" aria-label="Select SkyHop 218, 06:40 departure, $128" onclick="openFare();return false;">Select</a>
+        </div>
+      </div>
+      <div class="result">
+        <div class="airline"><img src="https://picsum.photos/seed/skyhop-logo/72/72" alt=""><div><div>SkyHop</div><div class="nm">SH 402</div></div></div>
+        <div><div class="leg">11:20 &rarr; 14:30</div><div class="muted">Direct &middot; 2h 10m &middot; LHR&ndash;LIS</div></div>
+        <div class="price"><div class="amt">$146</div>
+          <a class="select" href="passengers.html" aria-label="Select SkyHop 402, 11:20 departure, $146" onclick="openFare();return false;">Select</a>
+        </div>
+      </div>
+      <div class="result">
+        <div class="airline"><img src="https://picsum.photos/seed/skyhop-logo/72/72" alt=""><div><div>SkyHop</div><div class="nm">SH 660</div></div></div>
+        <div><div class="leg">18:05 &rarr; 21:20</div><div class="muted">Direct &middot; 2h 15m &middot; LHR&ndash;LIS</div></div>
+        <div class="price"><div class="amt">$139</div>
+          <a class="select" href="passengers.html" aria-label="Select SkyHop 660, 18:05 departure, $139" onclick="openFare();return false;">Select</a>
+        </div>
+      </div>
+      </div>
+
+      <section class="dests">
+        <h2>Popular destinations from London</h2>
+        <div class="destgrid">
+          <div class="dest"><img src="https://picsum.photos/seed/skyhop-lisbon/400/260" alt="Colourful tiled rooftops of Lisbon"><div class="cap">Lisbon &middot; from $99</div></div>
+          <div class="dest"><img src="https://picsum.photos/seed/skyhop-rome/400/260" alt="The Colosseum in Rome at dusk"><div class="cap">Rome &middot; from $112</div></div>
+          <div class="dest"><img src="https://picsum.photos/seed/skyhop-athens/400/260" alt="The Acropolis overlooking Athens"><div class="cap">Athens &middot; from $134</div></div>
+          <div class="dest"><img src="https://picsum.photos/seed/skyhop-oslo/400/260" alt="A fjord and harbour in Oslo"><div class="cap">Oslo &middot; from $121</div></div>
+        </div>
+      </section>
+
+      <div class="badges">
+        <span>🔒 Secure booking</span>
+        <span>💺 Free seat selection on flex</span>
+        <span>🧳 Cabin bag included</span>
+        <span>↩️ 24-hour free cancellation</span>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Non-modal cookie bar. It correctly does not steal focus, but two of its controls are icon-only. -->
+<div id="ck-bar" class="ck-bar" role="region" aria-label="Cookie notice">
+  <span class="txt">We use cookies to personalise fares and remember your searches. See our <a href="#">cookie policy</a>.</span>
+  <button class="accept" type="button" onclick="ckClose()">Accept all</button>
+  <button class="reject" type="button" onclick="ckClose()">Reject non-essential</button>
+  <!-- INJECTED: MISSING_LABEL. Icon-only cookie-settings and close buttons, no text/aria-label. -->
+  <button class="ico" type="button"><svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"></path></svg></button>
+  <button class="ico" type="button" onclick="ckClose()"><svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg></button>
+</div>
+
+<!-- INJECTED: MODAL_FOCUS (roleless blind spot) + MISSING_LABEL. Selecting a flight opens a 'choose your
+     fare' modal built as a plain div (no role=dialog): it is not announced, focus is not moved into it,
+     it is not trapped, and Escape does not close it. Its close control is an unlabelled icon. -->
+<div id="fm-backdrop" class="fm-backdrop" hidden></div>
+<div id="fm-modal" class="fm-modal" hidden>
+  <button class="fm-close" onclick="closeFare()"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg></button>
+  <h2>Choose your fare</h2>
+  <p>SkyHop 218 &middot; London (LHR) to Lisbon (LIS) &middot; 12 Oct</p>
+  <button class="fm-opt" type="button" onclick="fareContinue()"><span><b>Basic</b><br>Carry-on bag only</span> <b>$128</b></button>
+  <button class="fm-opt" type="button" onclick="fareContinue()"><span><b>Plus</b><br>Checked bag and seat choice</span> <b>$158</b></button>
+  <button class="fm-opt" type="button" onclick="fareContinue()"><span><b>Flex</b><br>Free changes, refundable</span> <b>$198</b></button>
+</div>
+
+<footer>
+  <div class="foot">
+    <div>
+      <div class="logo" style="color:#fff">✈️ SkyHop</div>
+      <p style="color:#93aacb;font-size:14px;max-width:34ch">Low fares, flexible tickets and 120+ destinations across Europe.</p>
+    </div>
+    <div><h3>Book</h3><ul><li><a href="#">Flights</a></li><li><a href="#">Hotels</a></li><li><a href="#">Car hire</a></li><li><a href="#">Deals</a></li></ul></div>
+    <div><h3>Travel info</h3><ul><li><a href="#">Baggage</a></li><li><a href="#">Check-in</a></li><li><a href="#">Special assistance</a></li><li><a href="#">Route map</a></li></ul></div>
+    <div><h3>Help</h3><ul><li><a href="#">Contact us</a></li><li><a href="#">Refunds</a></li><li><a href="#">Terms</a></li><li><a href="#">Privacy</a></li></ul></div>
+  </div>
+  <div class="legal"><div class="in">&copy; 2026 SkyHop Airways. Fares include taxes and charges unless stated otherwise.</div></div>
+</footer>
+
+<script>
+  // INITIAL_FOCUS: steal focus to the middle of the page on load.
+  window.addEventListener('load', function(){
+    var p = document.getElementById('promo');
+    if (p) { p.focus(); }
+  });
+
+  // Non-modal cookie bar: dismiss on click; does not steal focus.
+  function ckClose(){ var b = document.getElementById('ck-bar'); if (b) { b.style.display = 'none'; } }
+
+  // Search reveals the results (realistic flow) and moves focus to the results heading.
+  function doSearch(){
+    var r = document.getElementById('results'); if (r) { r.hidden = false; }
+    var h = document.getElementById('results-heading'); if (h) { h.focus(); }
+  }
+
+  // BROKEN fare modal: opens on selecting a flight but does NOT move focus in, no trap, no Escape.
+  function openFare(){ document.getElementById('fm-backdrop').hidden = false; document.getElementById('fm-modal').hidden = false; }
+  function closeFare(){ document.getElementById('fm-backdrop').hidden = true; document.getElementById('fm-modal').hidden = true; }
+  function fareContinue(){ window.location.href = 'passengers.html'; }
+
+  // FOCUS_TRAP: keep Tab focus cycling inside the chat widget, no way out.
+  var chat = document.getElementById('chat');
+  var items = chat.querySelectorAll('button');
+  chat.addEventListener('keydown', function(e){
+    if (e.key !== 'Tab') return;
+    e.preventDefault();
+    var list = Array.prototype.slice.call(items);
+    var i = list.indexOf(document.activeElement);
+    var next = e.shiftKey ? (i <= 0 ? list.length - 1 : i - 1) : (i >= list.length - 1 ? 0 : i + 1);
+    list[next].focus();
+  });
+</script>
+</body>
+</html>

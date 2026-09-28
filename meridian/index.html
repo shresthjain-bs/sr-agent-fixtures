@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Request a callback &ndash; Meridian Bank</title>
+<style>
+  :root{--ink:#12233b;--muted:#5b6472;--line:#dde3ea;--brand:#1b3a6b;--brand-l:#2a5296;--accent:#c8102e;--bg:#f4f6f9}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55}
+  a{color:var(--brand-l)}
+  img{display:block}
+  .skip{position:absolute;left:-999px;top:0;background:#fff;padding:10px 16px;border:2px solid var(--brand);z-index:50}
+  .skip:focus{left:8px}
+  .utility{background:#0e2748;color:#cddcf0;font-size:13px}
+  .utility .in{max-width:1120px;margin:0 auto;padding:7px 20px;display:flex;gap:20px}
+  .utility a{color:#cddcf0;text-decoration:none}
+  .utility .right{margin-left:auto;display:flex;gap:18px}
+  header{background:var(--brand);color:#fff}
+  .bar{display:flex;align-items:center;gap:24px;max-width:1120px;margin:0 auto;padding:15px 20px}
+  .logo{font-weight:800;font-size:21px;letter-spacing:-.3px;color:#fff;text-decoration:none;display:flex;align-items:center;gap:8px}
+  nav.main ul{display:flex;gap:20px;list-style:none;margin:0;padding:0}
+  nav.main a{color:#dfe7f2;text-decoration:none;font-size:15px}
+  .bar .cta{margin-left:auto;display:flex;gap:10px}
+  .btn{border-radius:8px;padding:10px 16px;font-size:14px;cursor:pointer;text-decoration:none;border:0;font-weight:600}
+  .btn.ghost{background:transparent;color:#fff;border:1px solid #5c7bad}
+  .btn.solid{background:#fff;color:var(--brand)}
+  .hero{background:linear-gradient(120deg,#1b3a6b,#2a5296);color:#fff}
+  .hero .in{max-width:1120px;margin:0 auto;padding:40px 20px;display:grid;grid-template-columns:1.2fr 1fr;gap:30px;align-items:center}
+  .hero h1{font-size:34px;margin:0 0 10px;line-height:1.15}
+  .hero p{margin:0 0 18px;color:#dbe6f5;max-width:48ch}
+  .hero img{width:100%;height:240px;object-fit:cover;border-radius:14px}
+  main{max-width:1120px;margin:0 auto;padding:30px 20px}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:10px}
+  .pcard{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px}
+  .pcard .ic{font-size:24px}
+  .pcard h3{margin:8px 0 6px;font-size:17px}
+  .pcard p{margin:0 0 10px;color:var(--muted);font-size:14px}
+  .pcard a{font-weight:600;text-decoration:none}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin:34px 0;text-align:center}
+  .stat b{display:block;font-size:26px;color:var(--brand)}
+  .stat span{color:var(--muted);font-size:14px}
+  .callback{display:grid;grid-template-columns:1fr 1fr;gap:34px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:28px;margin-top:10px}
+  .callback h2{font-size:24px;margin:0 0 6px}
+  .callback .lead{color:var(--muted);margin:0 0 8px}
+  .callback ul{margin:14px 0 0;padding-left:18px;color:#33445a;font-size:14px}
+  .callback li{margin-bottom:6px}
+  form .field{margin-bottom:18px}
+  label{display:block;font-weight:600;font-size:14px;margin-bottom:6px}
+  input,textarea,select{width:100%;border:1px solid var(--line);border-radius:8px;padding:11px 12px;font-size:15px;font-family:inherit}
+  textarea{min-height:110px;resize:vertical}
+  .req{color:var(--accent)}
+  .err{color:var(--accent);font-size:13px;margin-top:6px;display:none}
+  .err.show{display:block}
+  .toolbar{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+  .iconbtn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:9px 11px;cursor:pointer;font-size:16px}
+  .submit{background:var(--brand);color:#fff;border:0;border-radius:8px;padding:12px 20px;font-size:15px;cursor:pointer;font-weight:600}
+  .faq{margin:40px 0}
+  .faq h2{font-size:22px}
+  details{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:10px}
+  summary{font-weight:600;cursor:pointer}
+  details p{color:var(--muted);margin:10px 0 0}
+  footer{background:#0e2748;color:#c7d6ea;margin-top:20px}
+  .foot{max-width:1120px;margin:0 auto;padding:34px 20px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:24px}
+  .foot h3{font-size:14px;color:#fff;margin:0 0 12px}
+  .foot ul{list-style:none;margin:0;padding:0}
+  .foot li{margin-bottom:8px}
+  .foot a{color:#c7d6ea;text-decoration:none;font-size:14px}
+  .legal{border-top:1px solid #24405f;color:#8ba6c8;font-size:12px}
+  .legal .in{max-width:1120px;margin:0 auto;padding:16px 20px}
+  @media(max-width:900px){.hero .in,.callback{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.foot{grid-template-columns:1fr 1fr}}
+  /* Cookie consent (proper, accessible dialog) */
+  .ck-backdrop{position:fixed;inset:0;background:rgba(6,20,40,.5);z-index:200}
+  .ck-modal{position:fixed;z-index:210;left:50%;top:50%;transform:translate(-50%,-50%);width:min(520px,92vw);background:#fff;border-radius:14px;box-shadow:0 24px 60px rgba(0,0,0,.35);padding:24px}
+  .ck-modal h2{margin:0 0 8px;font-size:20px}
+  .ck-modal p{margin:0 0 16px;color:var(--muted);font-size:14px}
+  .ck-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .ck-reject{background:#fff;color:var(--brand);border:1px solid var(--brand);border-radius:8px;padding:12px 16px;font-size:14px;cursor:pointer;font-weight:600}
+  .ck-link{background:none;border:0;color:var(--brand-l);text-decoration:underline;cursor:pointer;font-size:14px}
+</style>
+</head>
+<body>
+<!-- PASS: working skip link, target exists -->
+<a class="skip" href="#main">Skip to main content</a>
+
+<!-- PASS (cookie consent, done right): a proper modal dialog. Focus moves into it on load, Tab is
+     trapped inside, and Escape / Reject closes it and returns focus to the page. Initial focus landing
+     on a consent dialog is acceptable, so this is a passing INITIAL_FOCUS and passing MODAL_FOCUS. -->
+<div id="ck-backdrop" class="ck-backdrop" hidden></div>
+<div id="ck-modal" class="ck-modal" role="dialog" aria-modal="true" aria-labelledby="ck-title" aria-describedby="ck-desc" hidden>
+  <h2 id="ck-title">Cookie preferences</h2>
+  <p id="ck-desc">We use essential cookies to run Meridian Online and, with your consent, analytics cookies to improve it. You can change this any time in Settings.</p>
+  <div class="ck-actions">
+    <button id="ck-accept" type="button" class="submit">Accept all</button>
+    <button type="button" class="ck-reject" onclick="ckClose()">Reject non-essential</button>
+    <button type="button" class="ck-link" onclick="ckClose()">Manage preferences</button>
+  </div>
+</div>
+
+<div class="utility">
+  <div class="in"><span>Lost or stolen card? Call 0800 123 4567</span><div class="right"><a href="#">Personal</a><a href="#">Business</a><a href="#">Log in</a></div></div>
+</div>
+
+<header>
+  <div class="bar">
+    <a class="logo" href="index.html"><span aria-hidden="true">🏦</span> Meridian Bank</a>
+    <nav class="main" aria-label="Primary">
+      <ul>
+        <li><a href="#">Accounts</a></li>
+        <li><a href="#">Cards</a></li>
+        <li><a href="#">Loans</a></li>
+        <li><a href="#">Mortgages</a></li>
+        <li><a href="#">Support</a></li>
+      </ul>
+    </nav>
+    <div class="cta">
+      <a class="btn ghost" href="#">Register</a>
+      <a class="btn solid" href="#">Log in</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="in">
+    <div>
+      <h1 id="top-heading" tabindex="-1">Banking that calls you back</h1>
+      <p>Prefer to talk it through? Leave your details and a Meridian specialist will call you within one business day, at a time that suits you.</p>
+      <a class="btn solid" href="#callback-panel">Request a callback</a>
+    </div>
+    <img src="https://picsum.photos/seed/meridian-hero/600/380" alt="A person reviewing their finances on a laptop at a kitchen table">
+  </div>
+</section>
+
+<main id="main">
+  <div class="cards">
+    <div class="pcard"><div class="ic" aria-hidden="true">💳</div><h3>Everyday accounts</h3><p>No monthly fee current accounts with instant notifications and budgeting tools.</p><a href="#">Compare accounts</a></div>
+    <div class="pcard"><div class="ic" aria-hidden="true">🏠</div><h3>Mortgages</h3><p>Fixed and tracker rates, with a decision in principle in minutes.</p><a href="#">Explore mortgages</a></div>
+    <div class="pcard"><div class="ic" aria-hidden="true">📈</div><h3>Savings &amp; ISAs</h3><p>Competitive rates and tax-efficient options to help your money grow.</p><a href="#">See savings rates</a></div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><b>4.6★</b><span>App Store rating</span></div>
+    <div class="stat"><b>3.2m</b><span>Customers</span></div>
+    <div class="stat"><b>24/7</b><span>Fraud monitoring</span></div>
+    <div class="stat"><b>1 day</b><span>Callback promise</span></div>
+  </div>
+
+  <section class="callback" id="callback-panel" aria-label="Request a callback">
+    <div>
+      <h2>Request a callback</h2>
+      <p class="lead">Leave your details and a Meridian specialist will call you within one business day.</p>
+      <p style="font-size:14px;color:#33445a">We can help with:</p>
+      <ul>
+        <li>Opening or switching an account</li>
+        <li>Mortgage and loan enquiries</li>
+        <li>Fraud, disputes and card issues</li>
+        <li>Business banking</li>
+      </ul>
+    </div>
+
+    <form id="callback" novalidate>
+      <div class="field">
+        <!-- INJECTED (subtle): ACTIVATION_FAILURE. Labelled and announced as an input, but keydown blocks typed characters, so the user cannot type their name. -->
+        <label for="name">Full name <span class="req">*</span></label>
+        <input id="name" name="name" type="text" required>
+        <span class="err" id="err-name">Please enter your full name.</span>
+      </div>
+      <div class="toolbar">
+        <!-- INJECTED (subtle): MISSING_LABEL. Icon-only attach button, no text/aria-label. -->
+        <button type="button" class="iconbtn"><svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8.5l-9.2 9.2a4 4 0 0 1-5.6-5.6l8.5-8.5a2.5 2.5 0 0 1 3.5 3.5l-8.5 8.5a1 1 0 0 1-1.4-1.4l7.8-7.8"></path></svg></button>
+        <span style="font-size:13px;color:var(--muted)">Attach a statement (optional)</span>
+      </div>
+      <button type="submit" class="submit">Request callback</button>
+    </form>
+  </section>
+
+  <section class="faq">
+    <h2>Frequently asked</h2>
+    <details><summary>When will you call me?</summary><p>Within one business day. If you request a callback after 5pm, we will call the next working day.</p></details>
+    <details><summary>Is my information secure?</summary><p>Yes. Your details are encrypted in transit and handled in line with our privacy policy and UK data protection law.</p></details>
+    <details><summary>Can I book a branch appointment instead?</summary><p>Absolutely. Use the branch locator to find your nearest Meridian and book a time online.</p></details>
+  </section>
+</main>
+
+<footer>
+  <div class="foot">
+    <div>
+      <div class="logo" style="color:#fff">🏦 Meridian Bank</div>
+      <p style="color:#9fb6d4;font-size:14px;max-width:36ch">Meridian Bank is a trading name of Meridian Financial Services, authorised and regulated by the Financial Conduct Authority.</p>
+    </div>
+    <div><h3>Banking</h3><ul><li><a href="#">Current accounts</a></li><li><a href="#">Savings</a></li><li><a href="#">Credit cards</a></li><li><a href="#">Loans</a></li></ul></div>
+    <div><h3>Support</h3><ul><li><a href="#">Help centre</a></li><li><a href="#">Report fraud</a></li><li><a href="#">Branch locator</a></li><li><a href="#">Accessibility</a></li></ul></div>
+    <div><h3>About</h3><ul><li><a href="#">Our story</a></li><li><a href="#">Careers</a></li><li><a href="#">Press</a></li><li><a href="#">Investors</a></li></ul></div>
+  </div>
+  <div class="legal"><div class="in">&copy; 2026 Meridian Financial Services. All rights reserved. Calls may be recorded for training and security.</div></div>
+</footer>
+
+<script>
+  // ACTIVATION_FAILURE: swallow printable keystrokes so keyboard typing never enters the name.
+  var nameField = document.getElementById('name');
+  nameField.addEventListener('keydown', function(e){
+    if (e.key && e.key.length === 1) { e.preventDefault(); }
+  });
+
+  // FORM_ERROR: on empty submit, reveal red error text only. No role=alert / aria-live, no focus move.
+  document.getElementById('callback').addEventListener('submit', function(e){
+    e.preventDefault();
+    var el = document.getElementById('name');
+    var err = document.getElementById('err-name');
+    if (!el.value.trim()) { err.classList.add('show'); } else { err.classList.remove('show'); }
+    // Nothing is announced; a sighted user sees red text, a screen-reader user hears silence.
+  });
+
+  // Cookie consent done correctly: proper dialog, focus moved in, Tab trapped, Escape closes.
+  (function(){
+    var backdrop = document.getElementById('ck-backdrop');
+    var modal = document.getElementById('ck-modal');
+    var buttons = modal.querySelectorAll('button');
+    var bg = ['.utility','header','main','footer'].map(function(s){ return document.querySelector(s); });
+    function setBg(on){ bg.forEach(function(el){ if(!el) return; if(on){ el.setAttribute('inert',''); el.setAttribute('aria-hidden','true'); } else { el.removeAttribute('inert'); el.removeAttribute('aria-hidden'); } }); }
+    window.ckClose = function(){
+      backdrop.hidden = true; modal.hidden = true; setBg(false);
+      var h = document.getElementById('top-heading');
+      if (h) { h.focus(); }
+    };
+    document.getElementById('ck-accept').addEventListener('click', window.ckClose);
+    modal.addEventListener('keydown', function(e){
+      if (e.key === 'Escape') { e.preventDefault(); window.ckClose(); return; }
+      if (e.key !== 'Tab') return;
+      var list = Array.prototype.slice.call(buttons);
+      var i = list.indexOf(document.activeElement);
+      if (e.shiftKey && i <= 0) { e.preventDefault(); list[list.length - 1].focus(); }
+      else if (!e.shiftKey && i === list.length - 1) { e.preventDefault(); list[0].focus(); }
+    });
+    window.addEventListener('load', function(){
+      backdrop.hidden = false; modal.hidden = false; setBg(true);
+      document.getElementById('ck-accept').focus();
+    });
+  })();
+</script>
+</body>
+</html>

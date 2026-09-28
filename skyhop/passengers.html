@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- INJECTED (obvious): PAGE_TITLE. Placeholder title left in on this step of the funnel. -->
+<title>Untitled</title>
+<style>
+  :root{--ink:#0f1e2e;--muted:#5a6675;--line:#e1e6ec;--brand:#0057d9;--brand-d:#0044a8;--accent:#c0392b;--bg:#eef2f7}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.5}
+  a{color:var(--brand)}
+  img{display:block}
+  .skip{position:absolute;left:-999px;top:0;background:#fff;padding:10px 16px;border:2px solid var(--brand);z-index:80}
+  .skip:focus{left:8px}
+  header{background:#fff;border-bottom:1px solid var(--line)}
+  .bar{display:flex;align-items:center;gap:22px;max-width:1040px;margin:0 auto;padding:14px 20px}
+  .logo{font-weight:800;font-size:21px;color:var(--brand);text-decoration:none}
+  nav.main ul{display:flex;gap:20px;list-style:none;margin:0 0 0 auto;padding:0}
+  nav.main a{color:var(--ink);text-decoration:none;font-size:15px}
+  .steps{background:#fff;border-bottom:1px solid var(--line)}
+  .steps .in{max-width:1040px;margin:0 auto;padding:12px 20px;display:flex;gap:26px;font-size:14px;color:var(--muted)}
+  .steps .cur{color:var(--brand);font-weight:700}
+  .steps .done{color:#2e7d32}
+  main{max-width:1040px;margin:0 auto;padding:24px 20px}
+  .grid{display:grid;grid-template-columns:1fr 320px;gap:26px;align-items:start}
+  h1{font-size:25px;margin:2px 0 6px}
+  .lead{color:var(--muted);margin:0 0 20px}
+  form{background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px}
+  fieldset{border:1px solid var(--line);border-radius:10px;padding:16px;margin:0 0 20px}
+  legend{font-weight:700;font-size:15px;padding:0 6px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .field{margin-bottom:16px}
+  label{display:block;font-weight:600;font-size:14px;margin-bottom:6px}
+  input,select{width:100%;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:15px;font-family:inherit}
+  .req{color:var(--accent)}
+  .err{color:var(--accent);font-size:13px;margin-top:6px;display:none}
+  .err.show{display:block}
+  .extras label{display:flex;gap:10px;align-items:flex-start;font-weight:400;border:1px solid var(--line);border-radius:8px;padding:12px;margin-bottom:10px}
+  .extras .price{margin-left:auto;font-weight:700}
+  .actions{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+  .back{color:var(--brand);text-decoration:none;font-size:14px}
+  .continue{background:var(--brand);color:#fff;border-radius:8px;padding:12px 22px;font-size:15px;cursor:pointer;user-select:none}
+  aside.summary{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px;position:sticky;top:16px}
+  aside.summary h2{font-size:16px;margin:0 0 12px}
+  .trip{display:flex;gap:10px;align-items:center;margin-bottom:10px}
+  .trip img{width:34px;height:34px;border-radius:8px}
+  .fare{border-top:1px solid var(--line);margin-top:12px;padding-top:12px;font-size:14px}
+  .fare .r{display:flex;justify-content:space-between;margin-bottom:6px;color:var(--muted)}
+  .fare .total{display:flex;justify-content:space-between;font-weight:800;font-size:17px;color:var(--ink);border-top:1px solid var(--line);padding-top:10px;margin-top:6px}
+  footer{background:#0b1b30;color:#c3d4ea;margin-top:26px}
+  .foot{max-width:1040px;margin:0 auto;padding:26px 20px;display:flex;gap:24px;flex-wrap:wrap}
+  .foot a{color:#c3d4ea;text-decoration:none;font-size:14px}
+  @media(max-width:900px){.grid{grid-template-columns:1fr}.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<!-- PASS: working skip link -->
+<a class="skip" href="#main">Skip to main content</a>
+
+<header>
+  <div class="bar">
+    <a class="logo" href="index.html">✈️ SkyHop</a>
+    <nav class="main" aria-label="Primary">
+      <ul>
+        <li><a href="index.html">Flights</a></li>
+        <li><a href="#">Check-in</a></li>
+        <li><a href="#">Manage booking</a></li>
+        <li><a href="#">Help</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="steps">
+  <div class="in">
+    <span class="done">1. Flight selected ✓</span>
+    <span class="cur">2. Passenger details</span>
+    <span>3. Extras</span>
+    <span>4. Payment</span>
+  </div>
+</div>
+
+<main id="main">
+  <div class="grid">
+    <div>
+      <h1>Passenger details</h1>
+      <p class="lead">Enter each traveller's details exactly as they appear on their passport.</p>
+
+      <form id="paxForm" novalidate>
+        <div class="field">
+          <label for="pax-name">Full name <span class="req">*</span></label>
+          <input id="pax-name" type="text" required>
+          <span class="err" id="err-name">Please enter the passenger's name.</span>
+        </div>
+
+        <div class="actions">
+          <a class="back" href="index.html">&larr; Back to results</a>
+          <!-- INJECTED (subtle): UNREACHABLE_ELEMENT. "Continue to payment" is a div with a click handler but no tabindex/role: a mouse user can click it (it shows a status message) but the keyboard can never reach it, so a keyboard/SR user cannot complete the booking. -->
+          <div class="continue" onclick="goPay()">Continue to payment</div>
+          <span id="pay-status" role="status" style="margin-left:12px;color:var(--muted);font-size:14px"></span>
+        </div>
+      </form>
+    </div>
+
+    <aside class="summary" aria-label="Trip summary">
+      <h2>Your trip</h2>
+      <div class="trip">
+        <img src="https://picsum.photos/seed/skyhop-logo/72/72" alt="">
+        <div><strong>London (LHR) &rarr; Lisbon (LIS)</strong><div style="color:var(--muted);font-size:13px">SH 218 &middot; 12 Oct &middot; 06:40&ndash;09:55</div></div>
+      </div>
+      <div class="fare">
+        <div class="r"><span>Fare (1 adult)</span><span>$110.00</span></div>
+        <div class="r"><span>Taxes &amp; charges</span><span>$18.00</span></div>
+        <div class="total"><span>Total</span><span>$128.00</span></div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer>
+  <div class="foot">
+    <span style="color:#93aacb">&copy; 2026 SkyHop Airways.</span>
+    <a href="#">Privacy</a><a href="#">Terms</a><a href="#">Special assistance</a><a href="#">Contact us</a>
+  </div>
+</footer>
+
+<script>
+  // FORM_ERROR: empty submit reveals red text only. No role=alert / aria-live, no focus move.
+  // Mouse users can click 'Continue to payment' and get feedback; keyboard users cannot reach it at all.
+  function goPay(){
+    var s = document.getElementById('pay-status');
+    if (s) { s.textContent = 'Opening payment page in a new tab...'; }
+  }
+</script>
+</body>
+</html>

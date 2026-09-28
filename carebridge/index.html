@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book an appointment &ndash; CareBridge Clinic</title>
+<style>
+  :root{--ink:#14232b;--muted:#5c6b73;--line:#e0e7ea;--brand:#0e8f88;--brand-d:#0b746e;--accent:#c0392b;--bg:#f2f7f7}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55}
+  a{color:var(--brand-d)}
+  img{display:block}
+  .skip{position:absolute;left:-999px;top:0;background:#fff;padding:10px 16px;border:2px solid var(--brand);z-index:120}
+  .skip:focus{left:8px}
+  .utility{background:#0b3a37;color:#cfe9e6;font-size:13px}
+  .utility .in{max-width:1080px;margin:0 auto;padding:7px 20px;display:flex;gap:18px}
+  .utility .right{margin-left:auto;display:flex;gap:16px}
+  .utility a{color:#cfe9e6;text-decoration:none}
+  header{background:#fff;border-bottom:1px solid var(--line)}
+  .bar{display:flex;align-items:center;gap:24px;max-width:1080px;margin:0 auto;padding:14px 20px}
+  .logo{font-weight:800;font-size:21px;color:var(--brand);text-decoration:none;display:flex;align-items:center;gap:8px}
+  nav.main ul{display:flex;gap:20px;list-style:none;margin:0;padding:0}
+  nav.main a{color:var(--ink);text-decoration:none;font-size:15px}
+  .bar .cta{margin-left:auto}
+  .btn{background:var(--brand);color:#fff;border:0;border-radius:8px;padding:11px 18px;font-size:15px;cursor:pointer;font-weight:600;text-decoration:none}
+  .btn.secondary{background:#fff;color:var(--brand);border:1px solid var(--brand)}
+  .hero{background:linear-gradient(120deg,#0e8f88,#22b3aa);color:#fff}
+  .hero .in{max-width:1080px;margin:0 auto;padding:40px 20px;display:grid;grid-template-columns:1.15fr 1fr;gap:30px;align-items:center}
+  .hero h1{font-size:33px;margin:0 0 10px;line-height:1.15}
+  .hero p{margin:0 0 18px;color:#e6f7f5;max-width:46ch}
+  .hero img{width:100%;height:250px;object-fit:cover;border-radius:14px}
+  main{max-width:1080px;margin:0 auto;padding:30px 20px}
+  .panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px;display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+  .panel .doc{display:flex;gap:14px;align-items:center}
+  .panel .doc img{width:60px;height:60px;border-radius:50%}
+  .panel .txt{flex:1;min-width:220px}
+  .services{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:34px 0}
+  .svc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px}
+  .svc .ic{font-size:24px}
+  .svc h3{margin:8px 0 6px;font-size:17px}
+  .svc p{margin:0;color:var(--muted);font-size:14px}
+  .sec-h{font-size:22px;margin:36px 0 4px}
+  .sec-sub{color:var(--muted);margin:0 0 18px}
+  .docs{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .dcard{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;text-align:center;padding-bottom:14px}
+  .dcard img{width:100%;height:150px;object-fit:cover}
+  .dcard h3{margin:12px 0 2px;font-size:16px}
+  .dcard .role{color:var(--muted);font-size:13px;margin-bottom:10px}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:30px 0}
+  .stepc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px}
+  .stepc b{color:var(--brand);font-size:22px}
+  .tst{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:30px 0}
+  .tcard{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px}
+  .tcard .who{display:flex;gap:10px;align-items:center;margin-top:10px}
+  .tcard .who img{width:40px;height:40px;border-radius:50%}
+  footer{background:#0b3a37;color:#c6e4e1;margin-top:20px}
+  .foot{max-width:1080px;margin:0 auto;padding:34px 20px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:24px}
+  .foot h3{font-size:14px;color:#fff;margin:0 0 12px}
+  .foot ul{list-style:none;margin:0;padding:0}
+  .foot li{margin-bottom:8px}
+  .foot a{color:#c6e4e1;text-decoration:none;font-size:14px}
+  .legal{border-top:1px solid #1c524e;color:#8fbdb9;font-size:12px}
+  .legal .in{max-width:1080px;margin:0 auto;padding:16px 20px}
+  /* Modal */
+  .backdrop{position:fixed;inset:0;background:rgba(10,20,25,.45);z-index:100}
+  .modal{position:fixed;z-index:110;left:50%;top:50%;transform:translate(-50%,-50%);width:min(520px,92vw);background:#fff;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.3);padding:22px}
+  .modal .top{display:flex;align-items:center;margin-bottom:8px}
+  .modal h2{font-size:20px;margin:0}
+  .close{margin-left:auto;border:0;background:transparent;font-size:20px;cursor:pointer;line-height:1;padding:6px}
+  .field{margin:14px 0}
+  .modal label{display:block;font-weight:600;font-size:14px;margin-bottom:6px}
+  .modal input,.modal select{width:100%;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:15px;font-family:inherit}
+  .req{color:var(--accent)}
+  .err{color:var(--accent);font-size:13px;margin-top:6px;display:none}
+  .err.show{display:block}
+  .modal .actions{margin-top:18px;display:flex;gap:12px;justify-content:flex-end}
+  .modal .chk{display:flex;align-items:center;gap:8px;font-weight:400;margin-bottom:8px}
+  @media(max-width:900px){.hero .in{grid-template-columns:1fr}.services,.steps,.tst{grid-template-columns:1fr}.docs{grid-template-columns:repeat(2,1fr)}.foot{grid-template-columns:1fr 1fr}}
+  /* Cookie notice (non-modal bar that wrongly steals focus on load) */
+  .ck-bar{position:fixed;left:0;right:0;bottom:0;background:#0b3a37;color:#dff2f0;padding:12px 20px;display:flex;gap:14px;align-items:center;justify-content:center;flex-wrap:wrap;z-index:150;font-size:14px}
+  .ck-bar a{color:#fff}
+  .ck-bar button{border:0;border-radius:6px;padding:8px 14px;font-size:14px;cursor:pointer}
+  .ck-bar .accept{background:var(--brand);color:#fff;font-weight:600}
+  .ck-bar .reject{background:#fff;color:#0b3a37}
+</style>
+</head>
+<body>
+<!-- PASS: working skip link -->
+<a class="skip" href="#main">Skip to main content</a>
+
+<div class="utility">
+  <div class="in"><span>Emergency? Call your local emergency number</span><div class="right"><a href="#">Patient portal</a><a href="#">Find us</a><a href="#">Sign in</a></div></div>
+</div>
+
+<header>
+  <div class="bar">
+    <a class="logo" href="index.html"><span aria-hidden="true">➕</span> CareBridge</a>
+    <nav class="main" aria-label="Primary">
+      <ul>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Doctors</a></li>
+        <li><a href="#">For patients</a></li>
+        <li><a href="#">About</a></li>
+      </ul>
+    </nav>
+    <div class="cta"><a class="btn" href="#doctors-heading">Book appointment</a></div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="in">
+    <div>
+      <h1>Healthcare that fits your schedule</h1>
+      <p>Book a GP, nurse or specialist online. Most appointments are available within 48 hours, in person or by video.</p>
+      <a class="btn secondary" href="#doctors-heading">See availability</a>
+    </div>
+    <img src="https://picsum.photos/seed/carebridge-hero/600/360" alt="A friendly doctor talking with a patient in a bright clinic room">
+  </div>
+</section>
+
+<main id="main">
+  <div class="services">
+    <div class="svc"><div class="ic" aria-hidden="true">🩺</div><h3>General practice</h3><p>Everyday health concerns, check-ups and referrals.</p></div>
+    <div class="svc"><div class="ic" aria-hidden="true">💉</div><h3>Vaccinations</h3><p>Travel, flu and routine immunisations for all ages.</p></div>
+    <div class="svc"><div class="ic" aria-hidden="true">🧪</div><h3>Health screening</h3><p>Blood tests and preventive health assessments.</p></div>
+  </div>
+
+  <h2 class="sec-h" id="doctors-heading" tabindex="-1">Our doctors</h2>
+  <p class="sec-sub">A multidisciplinary team across general and specialist care.</p>
+  <p style="margin:0 0 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap"><button class="btn secondary" onclick="openFilter()">Filter by specialty</button><span id="docs-count" role="status" style="color:var(--muted);font-size:14px">Showing all 4 doctors</span></p>
+  <div class="docs" id="docs">
+    <div class="dcard" data-spec="General Practice"><img src="https://i.pravatar.cc/240?img=47" alt="Portrait of Dr. Priya Nair"><h3>Dr. Priya Nair</h3><div class="role">General Practice</div><button class="btn secondary" onclick="openModal()" aria-label="Book with Dr. Priya Nair">Book</button></div>
+    <div class="dcard" data-spec="Cardiology"><img src="https://i.pravatar.cc/240?img=13" alt="Portrait of Dr. Tom Reyes"><h3>Dr. Tom Reyes</h3><div class="role">Cardiology</div><button class="btn secondary" onclick="openModal()" aria-label="Book with Dr. Tom Reyes">Book</button></div>
+    <div class="dcard" data-spec="Dermatology"><img src="https://i.pravatar.cc/240?img=32" alt="Portrait of Dr. Lena Fischer"><h3>Dr. Lena Fischer</h3><div class="role">Dermatology</div><button class="btn secondary" onclick="openModal()" aria-label="Book with Dr. Lena Fischer">Book</button></div>
+    <div class="dcard" data-spec="Paediatrics"><img src="https://i.pravatar.cc/240?img=52" alt="Portrait of Dr. Omar Haddad"><h3>Dr. Omar Haddad</h3><div class="role">Paediatrics</div><button class="btn secondary" onclick="openModal()" aria-label="Book with Dr. Omar Haddad">Book</button></div>
+  </div>
+
+  <h2 class="sec-h">How it works</h2>
+  <div class="steps">
+    <div class="stepc"><b>1</b><h3>Choose a time</h3><p style="color:var(--muted);margin:6px 0 0">Pick a slot that suits you, in person or by video.</p></div>
+    <div class="stepc"><b>2</b><h3>Tell us why</h3><p style="color:var(--muted);margin:6px 0 0">Share a short reason so we can prepare.</p></div>
+    <div class="stepc"><b>3</b><h3>Get confirmed</h3><p style="color:var(--muted);margin:6px 0 0">Receive a reminder and any pre-visit steps.</p></div>
+  </div>
+
+  <h2 class="sec-h">What patients say</h2>
+  <div class="tst">
+    <div class="tcard"><p>&ldquo;Booked in the morning, seen the same afternoon. So easy.&rdquo;</p><div class="who"><img src="https://i.pravatar.cc/80?img=5" alt=""><span>Meera R.</span></div></div>
+    <div class="tcard"><p>&ldquo;The video appointment saved me a two-hour round trip.&rdquo;</p><div class="who"><img src="https://i.pravatar.cc/80?img=15" alt=""><span>James P.</span></div></div>
+    <div class="tcard"><p>&ldquo;Clear reminders and a lovely, unhurried consultation.&rdquo;</p><div class="who"><img src="https://i.pravatar.cc/80?img=25" alt=""><span>Aisha T.</span></div></div>
+  </div>
+</main>
+
+<footer>
+  <div class="foot">
+    <div>
+      <div class="logo" style="color:#fff">➕ CareBridge</div>
+      <p style="color:#93c4c0;font-size:14px;max-width:34ch">Modern primary care, close to home and online.</p>
+    </div>
+    <div><h3>Care</h3><ul><li><a href="#">General practice</a></li><li><a href="#">Vaccinations</a></li><li><a href="#">Screening</a></li><li><a href="#">Video visits</a></li></ul></div>
+    <div><h3>Patients</h3><ul><li><a href="#">Patient portal</a></li><li><a href="#">Repeat prescriptions</a></li><li><a href="#">Test results</a></li><li><a href="#">Fees</a></li></ul></div>
+    <div><h3>Clinic</h3><ul><li><a href="#">About us</a></li><li><a href="#">Find us</a></li><li><a href="#">Careers</a></li><li><a href="#">Contact</a></li></ul></div>
+  </div>
+  <div class="legal"><div class="in">&copy; 2026 CareBridge Clinic. This site does not provide emergency medical care.</div></div>
+</footer>
+
+<!-- Non-modal cookie bar that WRONGLY steals focus on load (the "non-modal, focus moves to banner"
+     case). It is correctly a labelled region with labelled buttons and does not block the page, but
+     pulling focus to a non-blocking bar on load is poor practice for screen-reader users. -->
+<div id="ck-bar" class="ck-bar" role="region" aria-label="Cookie notice">
+  <span>We use cookies to improve CareBridge. See our <a href="#">cookie policy</a>.</span>
+  <button id="ck-accept" class="accept" type="button" onclick="ckClose()">Accept</button>
+  <button class="reject" type="button" onclick="ckClose()">Reject</button>
+</div>
+
+<!-- PASS (proper modal): the 'Filter by specialty' dialog is built correctly - role=dialog + aria-modal,
+     focus moves in on open, Tab is contained, the background is inert, and BOTH Escape and a labelled
+     close button dismiss it and return focus to the trigger. It should NOT be flagged; it confirms the
+     MODAL_FOCUS check credits Escape as a valid way out. -->
+<div id="filter-backdrop" class="backdrop" hidden></div>
+<div id="filter-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="filter-title" hidden>
+  <div class="top">
+    <h2 id="filter-title">Filter by specialty</h2>
+    <button class="close" onclick="closeFilter()" aria-label="Close filter dialog"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg></button>
+  </div>
+  <div class="field">
+    <label class="chk"><input type="checkbox" value="General Practice"> General practice</label>
+    <label class="chk"><input type="checkbox" value="Cardiology"> Cardiology</label>
+    <label class="chk"><input type="checkbox" value="Dermatology"> Dermatology</label>
+    <label class="chk"><input type="checkbox" value="Paediatrics"> Paediatrics</label>
+  </div>
+  <div class="actions">
+    <button type="button" class="btn secondary" onclick="resetFilter()">Reset</button>
+    <button type="button" class="btn" onclick="applyFilter()">Apply filters</button>
+  </div>
+</div>
+
+<!-- INJECTED: MODAL_FOCUS (agent-detectable). It HAS role=dialog + aria-modal (so the agent's modal
+     check recognises it), but the focus management is broken: on open focus is NOT moved inside, Tab is
+     not trapped (leaks to the page behind), and Escape does not close it. This is the case the
+     MODAL_FOCUS check is designed to flag. -->
+<div id="backdrop" class="backdrop" hidden></div>
+<div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+  <div class="top">
+    <h2 id="modal-title">Appointment details</h2>
+    <!-- INJECTED (subtle): MISSING_LABEL. Icon-only close button, no text/aria-label. -->
+    <button class="close" onclick="closeModal()"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg></button>
+  </div>
+  <form id="apptForm" novalidate>
+    <div class="field">
+      <label for="pname">Patient name <span class="req">*</span></label>
+      <input id="pname" type="text" required>
+      <span class="err" id="err-pname"></span>
+    </div>
+    <div class="actions">
+      <button type="button" class="btn secondary" onclick="closeModal()">Cancel</button>
+      <button type="submit" class="btn">Confirm booking</button>
+    </div>
+  </form>
+</div>
+
+<script>
+  // Non-modal cookie bar. On dismiss it WRONGLY sends focus to a mid-page heading instead of the top.
+  function ckClose(){
+    var b = document.getElementById('ck-bar'); if (b) { b.style.display = 'none'; }
+    var h = document.getElementById('doctors-heading'); if (h) { h.focus(); }
+  }
+  window.addEventListener('load', function(){ var a = document.getElementById('ck-accept'); if (a) { a.focus(); } });
+
+  function openModal(){
+    document.getElementById('backdrop').hidden = false;
+    document.getElementById('modal').hidden = false;
+    // BUG: focus is NOT moved into the modal; it stays on the trigger behind the overlay.
+    // BUG: no focus trapping, so Tab walks straight into the background page.
+    // BUG: no Escape handler, so the dialog cannot be closed with the keyboard.
+  }
+  function closeModal(){
+    document.getElementById('backdrop').hidden = true;
+    document.getElementById('modal').hidden = true;
+  }
+
+  // PASS: proper 'Filter by specialty' dialog - focus moved in, Tab trapped, background inert, Escape and
+  // the labelled close both dismiss it and return focus to the trigger.
+  (function(){
+    var backdrop = document.getElementById('filter-backdrop');
+    var modal = document.getElementById('filter-modal');
+    var trigger = null;
+    var bg = ['.utility','header','main','footer'].map(function(s){ return document.querySelector(s); });
+    function setBg(on){ bg.forEach(function(el){ if(!el) return; if(on){ el.setAttribute('inert',''); el.setAttribute('aria-hidden','true'); } else { el.removeAttribute('inert'); el.removeAttribute('aria-hidden'); } }); }
+    window.openFilter = function(){
+      trigger = document.activeElement;
+      backdrop.hidden = false; modal.hidden = false; setBg(true);
+      var f = modal.querySelectorAll('button, input'); if (f.length) { f[0].focus(); }
+    };
+    window.closeFilter = function(){
+      backdrop.hidden = true; modal.hidden = true; setBg(false);
+      if (trigger) { trigger.focus(); }
+    };
+    // Functional filtering: show only the doctors whose specialty is selected (none selected = show all),
+    // and announce the new count via the role="status" region.
+    function applyToList(){
+      var checked = Array.prototype.slice.call(modal.querySelectorAll('input[type="checkbox"]:checked'))
+        .map(function(c){ return c.value; });
+      var cards = Array.prototype.slice.call(document.querySelectorAll('#docs .dcard'));
+      var shown = 0;
+      cards.forEach(function(card){
+        var match = checked.length === 0 || checked.indexOf(card.getAttribute('data-spec')) !== -1;
+        card.hidden = !match;
+        if (match) shown++;
+      });
+      var status = document.getElementById('docs-count');
+      if (status) {
+        status.textContent = (checked.length === 0)
+          ? ('Showing all ' + cards.length + ' doctors')
+          : ('Showing ' + shown + ' of ' + cards.length + ' doctors');
+      }
+    }
+    window.applyFilter = function(){ applyToList(); window.closeFilter(); };
+    window.resetFilter = function(){
+      Array.prototype.slice.call(modal.querySelectorAll('input[type="checkbox"]')).forEach(function(c){ c.checked = false; });
+      applyToList();
+    };
+    modal.addEventListener('keydown', function(e){
+      if (e.key === 'Escape') { e.preventDefault(); window.closeFilter(); return; }
+      if (e.key !== 'Tab') return;
+      var list = Array.prototype.slice.call(modal.querySelectorAll('button, input'));
+      if (!list.length) return;
+      var i = list.indexOf(document.activeElement);
+      if (e.shiftKey && i <= 0) { e.preventDefault(); list[list.length - 1].focus(); }
+      else if (!e.shiftKey && i === list.length - 1) { e.preventDefault(); list[0].focus(); }
+    });
+  })();
+
+  // FORM_ERROR: submitting always surfaces an error as red text ONLY - no role=alert / aria-live and no
+  // focus move - so a screen-reader user never hears it, whether the field is empty or filled.
+  //  - blank name        -> "Patient name is required."
+  //  - any non-blank name -> "unregistered user" error (so a dummy value still fails, keeping the
+  //    FORM_ERROR reproducible even when the agent types something in).
+  document.getElementById('apptForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var el = document.getElementById('pname');
+    var err = document.getElementById('err-pname');
+    if (!el.value.trim()) {
+      err.textContent = 'Patient name is required.';
+    } else {
+      err.textContent = 'This patient is not a registered user. Please register before booking an appointment.';
+    }
+    err.classList.add('show');
+    // Silence for a screen-reader user; only sighted users see the red messages.
+  });
+</script>
+</body>
+</html>

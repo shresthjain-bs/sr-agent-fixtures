@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nook Clamp Lamp &ndash; NestMart</title>
+<style>
+  :root{--ink:#1a1a2e;--muted:#5b6472;--line:#e6e8ec;--brand:#0a7d5a;--brand-d:#086749;--amber:#f5a623;--bg:#f7f8fa}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.5}
+  a{color:var(--brand)}
+  img{display:block}
+  .skip{position:absolute;left:-999px;top:0;background:#fff;padding:10px 16px;border:2px solid var(--brand);z-index:50}
+  .skip:focus{left:8px}
+  .utility{background:var(--brand-d);color:#dff3ec;font-size:13px}
+  .utility .in{max-width:1140px;margin:0 auto;padding:7px 20px;display:flex;gap:20px;align-items:center}
+  .utility a{color:#dff3ec;text-decoration:none}
+  .utility .right{margin-left:auto;display:flex;gap:18px}
+  header{background:#fff;border-bottom:1px solid var(--line)}
+  .bar{display:flex;align-items:center;gap:22px;max-width:1140px;margin:0 auto;padding:14px 20px}
+  .logo{font-weight:800;font-size:22px;color:var(--brand);letter-spacing:-.5px;text-decoration:none}
+  nav.main ul{display:flex;gap:18px;list-style:none;margin:0;padding:0}
+  nav.main a{color:var(--ink);text-decoration:none;font-size:15px}
+  .icons{margin-left:auto;display:flex;gap:6px}
+  .icons a{font-size:18px;text-decoration:none;color:var(--ink);padding:9px 10px}
+  main{max-width:1140px;margin:0 auto;padding:16px 20px}
+  .crumbs{font-size:13px;color:var(--muted);margin:6px 0 18px}
+  .crumbs a{color:var(--muted);text-decoration:none}
+  .product{display:grid;grid-template-columns:1.1fr 1fr;gap:34px;align-items:start}
+  .gallery .photo{width:100%;height:380px;object-fit:cover;background:#eef1f4;border-radius:14px}
+  .thumbs{display:flex;gap:10px;margin-top:12px}
+  .thumbs button{border:2px solid transparent;padding:0;background:none;border-radius:10px;cursor:pointer;overflow:hidden}
+  .thumbs button[aria-current="true"]{border-color:var(--brand)}
+  .thumbs img{width:76px;height:60px;object-fit:cover;display:block}
+  h1{font-size:28px;margin:0 0 6px}
+  .rating{color:var(--muted);font-size:14px;margin-bottom:10px}
+  .stars{color:var(--amber)}
+  .price{font-size:24px;font-weight:800;margin:8px 0}
+  .price .old{color:var(--muted);font-weight:500;font-size:16px;text-decoration:line-through;margin-left:8px}
+  .desc{color:#33404a}
+  .swatches{display:flex;gap:10px;margin:16px 0}
+  .swatch{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);cursor:pointer}
+  .qty{display:flex;align-items:center;gap:8px;margin:18px 0}
+  .qty input{width:56px;text-align:center;border:1px solid var(--line);border-radius:8px;padding:9px;font-size:15px}
+  .step{border:1px solid var(--line);background:#fff;border-radius:8px;width:40px;height:40px;font-size:18px;cursor:pointer}
+  .buys{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .add{background:var(--brand);color:#fff;border:0;border-radius:8px;padding:13px 24px;font-size:15px;cursor:pointer;font-weight:600}
+  .wish{background:#fff;color:var(--brand);border:1px solid var(--brand);border-radius:8px;padding:13px 18px;font-size:15px;cursor:pointer}
+  .added{color:var(--brand);font-size:13px;font-weight:600;margin-left:4px}
+  .ship{margin-top:16px;font-size:14px;color:var(--muted);display:flex;gap:18px;flex-wrap:wrap}
+  section.block{margin:40px 0}
+  section.block h2{font-size:20px;border-bottom:1px solid var(--line);padding-bottom:8px}
+  table.specs{width:100%;border-collapse:collapse;font-size:14px}
+  table.specs th,table.specs td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line)}
+  table.specs th{width:220px;color:var(--muted);font-weight:600}
+  .reviews{display:grid;gap:16px}
+  .review{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;grid-template-columns:48px 1fr;gap:14px}
+  .review img{width:48px;height:48px;border-radius:50%}
+  .review .who{font-weight:700}
+  .review .when{color:var(--muted);font-size:13px}
+  .related{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .rcard{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .rcard img{width:100%;height:130px;object-fit:cover}
+  .rcard .b{padding:12px}
+  .rcard h3{font-size:15px;margin:0 0 4px}
+  .rcard h3 a{text-decoration:none;color:var(--ink)}
+  .rcard .p{font-weight:700}
+  footer{background:#12231d;color:#cfe4db;margin-top:30px}
+  .foot{max-width:1140px;margin:0 auto;padding:34px 20px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:24px}
+  .foot h3{font-size:14px;color:#fff;margin:0 0 12px}
+  .foot ul{list-style:none;margin:0;padding:0}
+  .foot li{margin-bottom:8px}
+  .foot a{color:#cfe4db;text-decoration:none;font-size:14px}
+  .legal{border-top:1px solid #23413659;color:#8fb3a6;font-size:13px}
+  .legal .in{max-width:1140px;margin:0 auto;padding:16px 20px;display:flex;gap:16px;flex-wrap:wrap}
+  @media(max-width:900px){.product{grid-template-columns:1fr}.related{grid-template-columns:repeat(2,1fr)}.foot{grid-template-columns:1fr 1fr}}
+  /* Newsletter dialog (proper, accessible - passing example) */
+  .nl-backdrop{position:fixed;inset:0;background:rgba(10,20,25,.5);z-index:210}
+  .nl-modal{position:fixed;z-index:220;left:50%;top:50%;transform:translate(-50%,-50%);width:min(440px,92vw);background:#fff;border-radius:12px;padding:24px}
+  .nl-modal h2{margin:0 0 8px;font-size:20px}
+  .nl-modal p{margin:0 0 14px;color:var(--muted);font-size:14px}
+  .nl-close{position:absolute;top:10px;right:12px;border:0;background:transparent;font-size:20px;cursor:pointer;line-height:1}
+  .nl-modal input{width:100%;border:1px solid var(--line);border-radius:8px;padding:10px;font-size:15px;margin-bottom:10px}
+  .alerts{margin-top:14px}
+  .alerts button{background:#fff;color:var(--brand);border:1px solid var(--brand);border-radius:8px;padding:10px 16px;font-size:14px;cursor:pointer}
+</style>
+</head>
+<body>
+<!-- PASS: working skip link (contrast with the broken one on the shop page) -->
+<a class="skip" href="#main">Skip to main content</a>
+
+<div class="utility">
+  <div class="in">
+    <span>Free delivery over $50</span>
+    <div class="right"><a href="#">Store locator</a><a href="#">Help centre</a><a href="#">Sign in</a></div>
+  </div>
+</div>
+
+<header>
+  <div class="bar">
+    <a class="logo" href="index.html">🌿 NestMart</a>
+    <nav class="main" aria-label="Primary">
+      <ul>
+        <li><a href="index.html">Lighting</a></li>
+        <li><a href="#">Furniture</a></li>
+        <li><a href="#">Decor</a></li>
+        <li><a href="#">Rugs</a></li>
+        <li><a href="#">Outdoor</a></li>
+      </ul>
+    </nav>
+    <div class="icons">
+      <a href="#" aria-label="Wishlist, 2 saved">❤️</a>
+      <a class="cart" href="#" aria-label="Cart, 0 items">🛒</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <a href="index.html">Home</a> / <a href="index.html">Lighting</a> / <a href="index.html">Desk lamps</a> / Nook Clamp Lamp
+  </nav>
+
+  <div class="product">
+    <div class="gallery">
+      <img class="photo" id="mainphoto" src="https://picsum.photos/seed/lamp-nook/720/540" alt="White minimalist Nook clamp lamp clamped to the edge of a shelf">
+      <div class="thumbs">
+        <!-- PASS: thumbnail buttons carry accessible names -->
+        <button aria-label="Show front view" aria-current="true"><img src="https://picsum.photos/seed/lamp-nook/120/90" alt=""></button>
+        <button aria-label="Show side view"><img src="https://picsum.photos/seed/lamp-nook-2/120/90" alt=""></button>
+        <button aria-label="Show clamp close-up"><img src="https://picsum.photos/seed/lamp-nook-3/120/90" alt=""></button>
+        <button aria-label="Show lamp in use"><img src="https://picsum.photos/seed/lamp-nook-4/120/90" alt=""></button>
+      </div>
+    </div>
+    <div>
+      <h1>Nook Clamp Lamp</h1>
+      <div class="rating"><span class="stars" aria-hidden="true">★★★★☆</span> 4.2 &middot; 54 reviews &middot; <a href="#reviews">Read reviews</a></div>
+      <div class="price">$39.00</div>
+      <p class="desc">A compact clamp-on lamp for shelves, desks and headboards. The padded clamp fits surfaces up to 5 cm thick, the head rotates a full 360 degrees, and a single touch control cycles through three brightness levels. Warm, flicker-free LED light in a minimalist white finish.</p>
+
+      <div class="swatches" role="group" aria-label="Colour">
+        <button class="swatch" style="background:#4a4f57" aria-label="Slate grey"></button>
+        <button class="swatch" style="background:#111" aria-label="Matte black"></button>
+        <button class="swatch" style="background:#f2efe9" aria-label="Warm white"></button>
+      </div>
+
+      <div class="qty">
+        <!-- INJECTED (subtle): MISSING_LABEL. Icon-only stepper buttons, no text/aria-label. -->
+        <button class="step" onclick="stepQty(-1)"><svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+        <!-- PASS: quantity input is labelled -->
+        <label for="qty" style="position:absolute;left:-999px">Quantity</label>
+        <input id="qty" type="text" value="1">
+        <button class="step" onclick="stepQty(1)"><svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+      </div>
+
+      <div class="buys">
+        <!-- INJECTED (obvious): FOCUS_AFTER_ACTION. Activating updates cart count silently; focus stays; name unchanged. -->
+        <button class="add" onclick="addToCart(this)">Add to cart</button>
+        <!-- PASS: labelled secondary action -->
+        <button class="wish">Add to wishlist</button>
+      </div>
+
+      <p class="alerts"><button type="button" onclick="nlOpen()">Get restock alerts</button></p>
+
+      <div class="ship">
+        <span>🚚 Free delivery Wed, 25 Sep</span>
+        <span>↩️ Free 30-day returns</span>
+        <span>🛡️ 2-year warranty</span>
+      </div>
+    </div>
+  </div>
+
+  <section class="block">
+    <h2>Specifications</h2>
+    <table class="specs">
+      <tbody>
+        <tr><th scope="row">Light source</th><td>Integrated LED, 9W</td></tr>
+        <tr><th scope="row">Colour temperature</th><td>2700K &ndash; 5000K, adjustable</td></tr>
+        <tr><th scope="row">Brightness</th><td>Up to 650 lumens, stepless dimming</td></tr>
+        <tr><th scope="row">Controls</th><td>Touch panel on base</td></tr>
+        <tr><th scope="row">Ports</th><td>1 &times; USB-A (5V / 1A)</td></tr>
+        <tr><th scope="row">Dimensions</th><td>42 &times; 18 &times; 46 cm</td></tr>
+        <tr><th scope="row">Materials</th><td>Powder-coated aluminium, weighted steel base</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="block" id="reviews">
+    <h2>Customer reviews</h2>
+    <div class="reviews">
+      <article class="review">
+        <img src="https://i.pravatar.cc/96?img=12" alt="">
+        <div>
+          <div class="who">Priya M. <span class="when">&middot; 2 weeks ago</span></div>
+          <div class="stars" aria-hidden="true">★★★★★</div>
+          <p>Perfect for late-night study. The warm setting is lovely and the arm holds its position without drooping.</p>
+        </div>
+      </article>
+      <article class="review">
+        <img src="https://i.pravatar.cc/96?img=32" alt="">
+        <div>
+          <div class="who">Daniel O. <span class="when">&middot; 1 month ago</span></div>
+          <div class="stars" aria-hidden="true">★★★★☆</div>
+          <p>Great light and build quality. The USB port is a nice touch, though I wish it were USB-C.</p>
+        </div>
+      </article>
+      <article class="review">
+        <img src="https://i.pravatar.cc/96?img=45" alt="">
+        <div>
+          <div class="who">Sara K. <span class="when">&middot; 1 month ago</span></div>
+          <div class="stars" aria-hidden="true">★★★★★</div>
+          <p>Bright, even light with no flicker. Replaced two older lamps with this one.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>You might also like</h2>
+    <div class="related">
+      <div class="rcard"><img src="https://picsum.photos/seed/lamp-halden/400/260" alt="Brass Halden swing-arm desk lamp"><div class="b"><h3><a href="index.html#halden">Halden Swing-Arm Lamp</a></h3><div class="p">$72.00</div></div></div>
+      <div class="rcard"><img src="https://picsum.photos/seed/lamp-orbit/400/260" alt="Black Orbit architect lamp"><div class="b"><h3><a href="index.html#orbit">Orbit Architect Lamp</a></h3><div class="p">$95.00</div></div></div>
+      <div class="rcard"><img src="https://picsum.photos/seed/lamp-mono/400/260" alt="Compact white Mono task lamp"><div class="b"><h3><a href="index.html#mono">Mono Task Lamp</a></h3><div class="p">$29.00</div></div></div>
+      <div class="rcard"><img src="https://picsum.photos/seed/lamp-flux/400/260" alt="Wooden Flux tripod reading lamp"><div class="b"><h3><a href="index.html#flux">Flux Reading Lamp</a></h3><div class="p">$64.00</div></div></div>
+    </div>
+  </section>
+</main>
+
+<!-- PASS (newsletter modal, done right): opens from a trigger, moves focus in, traps Tab, Escape/close
+     works and returns focus to the trigger, and the close button is labelled. A proper modal. -->
+<div id="nl-backdrop" class="nl-backdrop" hidden></div>
+<div id="nl-modal" class="nl-modal" role="dialog" aria-modal="true" aria-labelledby="nl-title" hidden>
+  <button class="nl-close" onclick="nlClose()" aria-label="Close dialog">&times;</button>
+  <h2 id="nl-title">Restock alerts</h2>
+  <p>We'll email you when the Nook Clamp Lamp is back in your chosen colour.</p>
+  <label for="nl-email" style="display:block;font-weight:600;font-size:14px;margin-bottom:6px">Email address</label>
+  <input id="nl-email" type="email" placeholder="you@example.com">
+  <button class="add" type="button" onclick="nlClose()">Notify me</button>
+</div>
+
+<footer>
+  <div class="foot">
+    <div>
+      <div class="logo" style="color:#fff">🌿 NestMart</div>
+      <p style="color:#9fc2b6;font-size:14px;max-width:34ch">Well-made home essentials, designed to last and priced to be fair.</p>
+    </div>
+    <div><h3>Shop</h3><ul><li><a href="index.html">Lighting</a></li><li><a href="#">Furniture</a></li><li><a href="#">Decor</a></li><li><a href="#">Outdoor</a></li></ul></div>
+    <div><h3>Help</h3><ul><li><a href="#">Delivery</a></li><li><a href="#">Returns</a></li><li><a href="#">Track order</a></li><li><a href="#">Contact us</a></li></ul></div>
+    <div><h3>Company</h3><ul><li><a href="#">About</a></li><li><a href="#">Careers</a></li><li><a href="#">Sustainability</a></li><li><a href="#">Press</a></li></ul></div>
+  </div>
+  <div class="legal"><div class="in"><span>&copy; 2026 NestMart Ltd.</span><a href="#" style="color:#8fb3a6">Privacy</a><a href="#" style="color:#8fb3a6">Terms</a></div></div>
+</footer>
+
+<script>
+  var count = 0;
+  function stepQty(delta){
+    var q = document.getElementById('qty');
+    var n = Math.max(1, (parseInt(q.value, 10) || 1) + delta);
+    q.value = n;
+  }
+  function addToCart(btn){
+    // Visual-only feedback: cart number changes, but nothing is announced and focus stays on the button.
+    count += 1;
+    document.querySelector('.cart').setAttribute('aria-label', 'Cart, ' + count + ' items');
+    var wrap = btn.parentElement;
+    var tag = wrap.querySelector('.added');
+    if(!tag){ tag = document.createElement('span'); tag.className='added'; wrap.appendChild(tag); }
+    tag.textContent = 'Added to cart';
+    // No focus move, no aria-live region -> screen reader output does not change after Enter.
+  }
+
+  // Proper newsletter dialog: focus moved in, Tab trapped, Escape/close returns focus to the trigger.
+  var nlTrigger = null;
+  function nlOpen(){
+    nlTrigger = document.activeElement;
+    document.getElementById('nl-backdrop').hidden = false;
+    var m = document.getElementById('nl-modal');
+    m.hidden = false;
+    m.querySelector('.nl-close').focus();
+  }
+  function nlClose(){
+    document.getElementById('nl-backdrop').hidden = true;
+    document.getElementById('nl-modal').hidden = true;
+    if (nlTrigger) { nlTrigger.focus(); }
+  }
+  (function(){
+    var m = document.getElementById('nl-modal');
+    m.addEventListener('keydown', function(e){
+      if (e.key === 'Escape'){ e.preventDefault(); nlClose(); return; }
+      if (e.key !== 'Tab') return;
+      var f = m.querySelectorAll('button, input');
+      var list = Array.prototype.slice.call(f);
+      var i = list.indexOf(document.activeElement);
+      if (e.shiftKey && i <= 0){ e.preventDefault(); list[list.length - 1].focus(); }
+      else if (!e.shiftKey && i === list.length - 1){ e.preventDefault(); list[0].focus(); }
+    });
+  })();
+</script>
+</body>
+</html>

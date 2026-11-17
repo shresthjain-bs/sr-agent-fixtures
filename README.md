@@ -14,6 +14,7 @@ resolves to private `10.72.x.x` addresses and returns 401 on every path).
 |---|---|
 | [`broken-login.html`](broken-login.html) | Pinned accessibility defects, mapped to report `violationType`s |
 | [`clean-login.html`](clean-login.html) | The accessible counterpart — should yield a zero-violation report |
+| [`clean-login-form.html`](clean-login-form.html) | Accessible username + password form with submit — any credentials accepted, result in `role="status"` |
 | [`multipage-home.html`](multipage-home.html) | Clean entry page; one link to `multipage-product.html` |
 | [`multipage-product.html`](multipage-product.html) | Defective destination page — tests per-violation URL attribution (ATA-1285) |
 

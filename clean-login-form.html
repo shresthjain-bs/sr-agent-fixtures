@@ -1,0 +1,89 @@
+<!doctype html>
+<!--
+  SR Agent fixture — CLEAN login form. Same accessibility bar as clean-login.html, but with a
+  real username + password form and a submit button.
+
+    * descriptive <title>                         -> no PAGE_TITLE
+    * skip link, first in tab order, to <main>    -> no SKIP_LINK
+    * every input has a visible <label for>       -> no MISSING_LABEL
+    * the submit button has a real accessible name
+    * DOM order only, no positive tabindex        -> no BROKEN_FOCUS_ORDER
+    * errors and result announced via role="alert" / role="status"
+
+  Any username and password are accepted; nothing is sent anywhere. Inputs keep name/id so
+  automation can target them.
+
+  Keep this page accessible. A finding here reads as a product regression.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign In - SR Agent Fixture</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 2rem; }
+    form { display: grid; gap: 1rem; max-width: 20rem; }
+    label { display: block; font-weight: 600; margin-bottom: 0.25rem; }
+    input { font-size: 1rem; padding: 0.5rem; width: 100%; box-sizing: border-box; }
+    button { font-size: 1.25rem; padding: 0.6rem 1.2rem; justify-self: start; }
+    .error { color: #b00020; }
+    .skip { position: absolute; left: -9999px; }
+    .skip:focus { position: static; left: auto; display: inline-block; margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to main content</a>
+
+  <main id="main">
+    <h1>Sign in</h1>
+
+    <form id="login-form" novalidate>
+      <div>
+        <label for="username">Username</label>
+        <input id="username" name="username" type="text" autocomplete="username" required>
+      </div>
+
+      <div>
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required>
+      </div>
+
+      <p id="error" class="error" role="alert"></p>
+
+      <button id="submit" type="submit">Sign in</button>
+    </form>
+
+    <p id="result" role="status"></p>
+  </main>
+
+  <script>
+    document.getElementById('login-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var user = document.getElementById('username');
+      var pass = document.getElementById('password');
+      var error = document.getElementById('error');
+      var result = document.getElementById('result');
+
+      user.removeAttribute('aria-invalid');
+      pass.removeAttribute('aria-invalid');
+      error.textContent = '';
+      result.textContent = '';
+
+      if (!user.value.trim()) {
+        user.setAttribute('aria-invalid', 'true');
+        error.textContent = 'Enter your username.';
+        user.focus();
+        return;
+      }
+      if (!pass.value) {
+        pass.setAttribute('aria-invalid', 'true');
+        error.textContent = 'Enter your password.';
+        pass.focus();
+        return;
+      }
+
+      result.textContent = 'Signed in as ' + user.value.trim() + '.';
+    });
+  </script>
+</body>
+</html>
